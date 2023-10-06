@@ -1,0 +1,36 @@
+@use "@angular/material" as mat;
+@include mat.core();
+
+@import "variables/colors";
+@import "variables/font-sizes";
+@import "variables/palette";
+@import "variables/spacing";
+
+@import "fonts/fonts";
+
+@import "mixins/mixins";
+
+@import "utilities/background-color";
+@import "utilities/border-color";
+@import "utilities/spacing";
+@import "utilities/text-color";
+@import "utilities/typography";
+
+@import "components/custom";
+@import "components/material";
+
+$app-theme: mat.define-light-theme(
+    (
+        color: (
+            primary: $main-primary,
+            accent: $main-accent,
+            warn: $main-warn,
+        ),
+    )
+);
+
+body {
+    color: mat-color($main-dark) !important;
+}
+
+@include angular-material-theme($app-theme);

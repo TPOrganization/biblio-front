@@ -1,0 +1,12 @@
+@import "@angular/material/theming";
+@import "palette";
+
+$main-primary: mat.define-palette($md-primary);
+$main-accent: mat.define-palette($md-accent);
+$main-warn: mat.define-palette($md-warn);
+
+$main-dark: mat.define-palette($md-main-dark);
+$main-light-dark: mat.define-palette($md-main-light-dark);
+$main-success: mat.define-palette($md-main-success);
+$main-error: mat.define-palette($md-main-error);
+$main-info: mat.define-palette($md-main-info);

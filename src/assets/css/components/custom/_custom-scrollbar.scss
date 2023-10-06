@@ -1,0 +1,24 @@
+.custom-scrollbar {
+    /* ===== Scrollbar CSS ===== */
+    /* Firefox */
+    scrollbar-width: auto;
+    scrollbar-color: #858585 #ffffff;
+
+    /* Chrome, Edge, and Safari */
+    &::-webkit-scrollbar {
+        width: 5px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: #f1f1f1;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: #888;
+        border: 2px solid #888;
+
+        &:hover {
+            background: #555;
+        }
+    }
+}

@@ -1,0 +1,21 @@
+@import "../variables/_spacing";
+@for $i from 0 through 10 {
+    .flex-#{$i} {
+        flex: $i !important;
+    }
+}
+
+.flex-n {
+    flex: none !important;
+}
+
+// Custom margin / padding / border etc. en fonction des breakpoints
+.app-padding-margin {
+    @each $breakpoint in $breakpointsKeys {
+        @include mq($breakpoint) {
+            $base: map-get($base-paddings-margins, $breakpoint);
+            @for $i from 0 through 5 {
+            }
+        }
+    }
+}

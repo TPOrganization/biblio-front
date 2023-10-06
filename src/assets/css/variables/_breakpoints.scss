@@ -1,0 +1,16 @@
+$breakpoints: (
+    default: 0px,
+    mobile11: 360px,
+    mobile12: 390px,
+    mobile13: 414px,
+    tablet1: 768px,
+    tablet2: 800px,
+    desktop1: 1366px,
+    desktop2: 1440px,
+    desktop3: 1536px,
+    desktop4: 1600px,
+    desktop5: 1920px,
+    desktop6: 2560px,
+);
+
+$breakpointsKeys: default, mobile11, mobile12, mobile13, tablet1, tablet2, desktop1, desktop2, desktop3, desktop4, desktop5, desktop6;

@@ -1,0 +1,5 @@
+@import "../variables/colors";
+
+.border-color-primary {
+    border-color: mat-color($main-primary) !important;
+}

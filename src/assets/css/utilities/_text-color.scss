@@ -1,0 +1,5 @@
+@import "../variables/colors";
+
+.color-primary {
+    color: mat-color($main-primary) !important;
+}
