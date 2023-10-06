@@ -1,21 +1,5 @@
 // ============================================
 //  Variables à modifier pour l'ajustement
-$base-input-height: 45px;
-$base-input-radius: 10px;
-$base-typography-heights: (
-    default: 3.5px,
-    mobile11: 4px,
-    mobile12: 4px,
-    mobile13: 4.5px,
-    tablet1: 4.5px,
-    tablet2: 4.5px,
-    desktop1: 5px,
-    desktop2: 5px,
-    desktop3: 5px,
-    desktop4: 5px,
-    desktop5: 5px,
-    desktop6: 5px
-);
 $base-paddings-margins: (
     default: 4px,
     mobile11: 4.5px,
@@ -32,17 +16,3 @@ $base-paddings-margins: (
 );
 
 // Components _standard
-$component-snackbar-widths: (
-    default: 100%,
-    mobile11: 100%,
-    mobile12: 100%,
-    mobile13: 100%,
-    tablet1: 350px,
-    tablet2: 350px,
-    desktop1: 450px,
-    desktop2: 450px,
-    desktop3: 450px,
-    desktop4: 450px,
-    desktop5: 450px,
-    desktop6: 450px
-);

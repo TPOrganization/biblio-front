@@ -14,8 +14,6 @@
     @each $breakpoint in $breakpointsKeys {
         @include mq($breakpoint) {
             $base: map-get($base-paddings-margins, $breakpoint);
-            @for $i from 0 through 5 {
-            }
         }
     }
 }

@@ -1,6 +1,5 @@
 // Définition des font-size ici
 @each $breakpoint in $breakpointsKeys {
     @include mq($breakpoint) {
-        $base-typography-height: map-get($base-typography-heights, $breakpoint);
     }
 }
