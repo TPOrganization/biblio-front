@@ -1,0 +1,12 @@
+<div class="container-fluid h-100 text-center">
+    <div class="row">
+        <div class="img-background offset-3 p-5 col-6">
+            <h1 class="title-app color-main-dark_500"> MY POCKET <br> BOOKSHELF</h1>
+            <div class="background-form p-5 ">
+                <h2 class="color-main-dark_500">Inscription</h2>
+                <app-dynamic-form [questions]="signInQuestions" (submitEvent)="submit($event)"></app-dynamic-form>
+            </div>
+            <span> Vous avez un compte ? Se connecter </span>
+        </div>
+    </div>
+</div>
