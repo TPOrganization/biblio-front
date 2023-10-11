@@ -9,19 +9,7 @@ export class AuthQuestionService {
   getSignInQuestions() {
 
     const questions: QuestionBase<string>[] = [
-
-    //   new DropdownQuestion({
-    //     key: 'brave',
-    //     label: 'Bravery Rating',
-    //     options: [
-    //       {key: 'solid',  value: 'Solid'},
-    //       {key: 'great',  value: 'Great'},
-    //       {key: 'good',   value: 'Good'},
-    //       {key: 'unproven', value: 'Unproven'}
-    //     ],
-    //     order: 3
-    //   }),
-
+      
       new TextboxQuestion({
         key: 'lastName',
         label: 'Nom',

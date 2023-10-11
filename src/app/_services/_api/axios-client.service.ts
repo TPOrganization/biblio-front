@@ -23,13 +23,12 @@ export class AxiosClientService {
     private apiUrl: string
 
     constructor(private appConfig: AppConfigService) {
+        this.apiUrl = this.appConfig.config.apiUrl
 
         this.axiosClient = axios.create({
             timeout: this.appConfig.config.apiTimeout,
             withCredentials: true,
         })
-        this.apiUrl = this.appConfig.config.apiUrl
-        console.log(this.apiUrl)
 
         this.axiosClient.interceptors.request.use(
             (config) => {
