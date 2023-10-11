@@ -4,9 +4,8 @@
       <div *ngFor="let question of questions" class="form-row">
         <app-dynamic-form-question [question]="question" [form]="form"></app-dynamic-form-question>
       </div>
-  
       <div class="form-row">
-        <button type="submit" [disabled]="!form.valid"> Valider </button>
+        <button type="submit" class="button box-shadow" [disabled]="!form.valid"> Valider </button>
       </div>
     </form>
   </div>

@@ -12,7 +12,7 @@
     <div class="errorMessage" *ngIf="!isValid">{{question.label}} is required</div>
 
     <ng-template #questionBase let-question>
-        <mat-form-field appearance="outline">
+        <mat-form-field class="width" appearance="outline">
             <mat-label>{{question.label}}</mat-label>
             <input matInput [formControlName]="question.key" [id]="question.key" [type]="question.type">
         </mat-form-field>

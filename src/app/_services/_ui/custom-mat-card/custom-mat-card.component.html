@@ -1,0 +1,7 @@
+<ng-content></ng-content>
+<mat-card class="background-white opacity-90 margin">
+    <mat-card-content>
+        <h2 class="color-main-dark_500 p-3"><b>{{title}}</b></h2>
+        <app-dynamic-form [questions]="questions" (submitEvent)="submitEvent.emit($event)"></app-dynamic-form>
+    </mat-card-content>
+</mat-card>
