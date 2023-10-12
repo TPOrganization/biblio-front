@@ -11,10 +11,10 @@ import { AuthGuardService } from './_services/auth-guard.service'
 import { AppComponent } from './app.component'
 import localeFr from '@angular/common/locales/fr'
 import { LoadingSpinnerComponent } from './_services/_ui/loading-spinner/loading-spinner.component';
-import { DynamicFormComponent } from './_services/_ui/form-dynamic/form-dynamic.component'
 import { DynamicFormQuestionComponent } from './_services/_ui/dynamic-form-question/dynamic-form-question.component'
 import { AuthComponent } from './components/auth/auth.component';
 import { CustomMatCardComponent } from './_services/_ui/custom-mat-card/custom-mat-card.component'
+import { DynamicFormComponent } from './_services/_ui/dynamic-form/dynamic-form.component'
 
 
 

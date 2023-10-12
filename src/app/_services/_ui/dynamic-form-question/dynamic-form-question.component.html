@@ -1,5 +1,4 @@
 <div [formGroup]="form">
-
     <div [ngSwitch]="question.controlType">
         <ng-container *ngSwitchCase="'textbox'">
             <ng-container *ngTemplateOutlet="questionBase; context: {$implicit:question}"></ng-container>

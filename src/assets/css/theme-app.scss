@@ -37,3 +37,16 @@ body {
 }
 
 @include angular-material-theme($app-theme);
+
+.dark-theme {
+    $app-dark-theme: mat.define-light-theme(
+        (
+            color: (
+                primary: $main-dark,
+                accent: $main-dark,
+                warn: $main-dark
+            )
+        )
+    );
+    @include angular-material-theme($app-dark-theme);
+}

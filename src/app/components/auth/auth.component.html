@@ -1,10 +1,51 @@
 <div class="container-fluid h-100 text-center">
-    <div class="row h-100">
+    <div class="row h-100 overflow-auto">
         <div class="img-background rounded offset-3 col-6 box-shadow">
-            <div class="row h-100 align-items-center">
+            <div class="row h-100 flex-column">
                 <h1 class="pt-5 title-app color-main-dark_500"> MY POCKET <br> BOOKSHELF</h1>
-                <app-custom-mat-card [title]="title" [questions]="signInQuestions" (submitEvent)="submit($event)"></app-custom-mat-card>
-                <span class="color-main-dark_500"> Vous avez un compte ? <b>Se connecter</b> </span>
+                <div class="flex-1 d-flex align-items-center">
+                    <app-custom-mat-card class="w-100" [title]="title" [questions]="questions"
+                        (getFormGroup)="getFormGroup($event)">
+                        <ng-container [ngSwitch]="questionType">
+                            <ng-container *ngSwitchCase="'signIn'">
+                                <div class="disposition">
+                                    <button class="btnPasswordForgot" (click)="switchQuestions('forgotPassword')"> Mot
+                                        de passe oublié </button>
+                                </div>
+                                <button mat-raised-button color="accent" (click)="submit(this.form?.value)"> Se
+                                    connecter </button>
+                            </ng-container>
+                        </ng-container>
+                        <ng-container [ngSwitch]="questionType">
+                            <ng-container *ngSwitchCase="'forgotPassword'">
+                                <div class="row flex justify-content-evenly">
+                                    <button mat-button class="w-25 btnValid" mat-raised-button color="accent"
+                                        (click)="submit(this.form?.value)"> Valider </button>
+                                    <button mat-button class="w-25 btnBackTo" mat-raised-button color="accent"
+                                        (click)="switchQuestions('signIn')"> Retour</button>
+                                </div>
+                            </ng-container>
+                        </ng-container>
+                        <ng-container [ngSwitch]="questionType">
+                            <ng-container *ngSwitchCase="'signUp'">
+                                <button mat-raised-button color="accent" (click)="submit(this.form?.value)"> S'inscrire
+                                </button>
+                            </ng-container>
+                        </ng-container>
+                    </app-custom-mat-card>
+                </div>
+                <div class="row pb-5">
+                    <span class="color-main-dark_500">
+                        <ng-container [ngSwitch]="questionType">
+                            <ng-container *ngSwitchCase="'signIn'">
+                                Vous n'avez pas de compte ? <b (click)="switchQuestions('signUp')"> S'inscrire </b>
+                            </ng-container>
+                            <ng-container *ngSwitchCase="'signUp'">
+                                Vous avez un compte ? <b (click)="switchQuestions('signIn')"> Se connecter </b>
+                            </ng-container>
+                        </ng-container>
+                    </span>
+                </div>
             </div>
         </div>
     </div>

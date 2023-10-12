@@ -6,7 +6,7 @@ import { PasswordQuestion } from '../../_models/_ui/dynamic-form-question/questi
 @Injectable()
 export class AuthQuestionService {
 
-  getSignInQuestions() {
+  getSignUpQuestions() {
 
     const questions: QuestionBase<string>[] = [
       
@@ -51,5 +51,43 @@ export class AuthQuestionService {
     ];
 
     return questions.sort((a, b) => a.order - b.order);
+  }
+
+  getSignInQuestions(){
+    const questions: QuestionBase<string>[] = [
+      
+            new TextboxQuestion({
+        key: 'email',
+        label: 'Adresse mail',
+        type: 'email',
+        // required: true,
+        order: 3
+      }),
+
+      new PasswordQuestion({
+        key: 'password',
+        label: 'Mot de passe',
+        // required: true,
+        order: 4
+      }),
+    ];
+
+    return questions.sort((a, b) => a.order - b.order);
+
+  }
+
+  getForgotPassword(){
+    const questions: QuestionBase<string>[] = [
+      
+            new TextboxQuestion({
+        key: 'email',
+        label: 'Adresse mail',
+        type: 'email',
+        // required: true,
+        order: 3
+      }),
+    ]
+    return questions.sort((a, b) => a.order - b.order);
+
   }
 }
