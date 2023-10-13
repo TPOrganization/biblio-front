@@ -23,8 +23,7 @@ export class AxiosClientService {
     private apiUrl: string
 
     constructor(private appConfig: AppConfigService) {
-        this.apiUrl = this.appConfig.config.apiUrl
-
+        this.apiUrl = `${this.appConfig.config.API_URL}${this.appConfig.config.API_PREFIX}`
         this.axiosClient = axios.create({
             timeout: this.appConfig.config.apiTimeout,
             withCredentials: true,
@@ -62,7 +61,9 @@ export class AxiosClientService {
                 url: `${this.apiUrl}${options.path}`,
                 data: options.params,
             });
+            console.log("axiosReponse", axiosResponse.data)
             return axiosResponse.data;
+
         } catch (error) {
             Promise.reject(error);
             return null as any

@@ -11,5 +11,5 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 export class DynamicFormQuestionComponent {
   @Input() question!: QuestionBase<string>;
   @Input() form!: FormGroup;
-  get isValid() { return this.form.controls[this.question.key]?.valid; }
+  get isValid(): boolean { return this.form.controls[this.question.key]?.valid ?? false; }
 }
