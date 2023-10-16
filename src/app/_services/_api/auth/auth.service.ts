@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core'
 import { AxiosClientService } from '../axios-client.service';
-import { Router } from '@angular/router';
 import { AppConfigService } from '../../app-config.service';
-import { NgForm } from '@angular/forms';
 
 
 @Injectable({
@@ -24,7 +22,7 @@ export class AuthService {
 
     async signUp(formValue: any) {
         console.log(formValue)
-        const data = await this.axios.post({ path: `${this._path}/sign-up`, params: {formValue} })
+        const data = await this.axios.post({ path: `${this._path}/sign-up`, params: formValue })
         console.log('dataSignUp', data)
     }
 
