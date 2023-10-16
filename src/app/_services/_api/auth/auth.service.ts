@@ -15,13 +15,11 @@ export class AuthService {
         this._path = appConfigService.config.API_PATH.AUTH
      }
 
-    async signIn(formValue: any) {
-        const data = await this.axios.post({ path: `${this._path}/sign-in`, params: { email: formValue.email, password: formValue.password } })
-        console.log('dataSignIn', data)
+    async signIn(formValue : any) {
+        const data = await this.axios.post({ path: `${this._path}/sign-in`, params: {formValue} })
     }
 
-    async signUp(formValue: any) {
-        console.log(formValue)
+    async signUp(formValue : any) {
         const data = await this.axios.post({ path: `${this._path}/sign-up`, params: formValue })
         console.log('dataSignUp', data)
     }

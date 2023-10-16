@@ -15,18 +15,14 @@
                                 <button mat-raised-button color="accent" (click)="submit(this.form?.value)"> Se
                                     connecter </button>
                             </ng-container>
-                        </ng-container>
-                        <ng-container [ngSwitch]="questionType">
                             <ng-container *ngSwitchCase="'forgotPassword'">
                                 <div class="row flex justify-content-evenly">
                                     <button mat-button class="w-25 btnValid" mat-raised-button color="accent"
-                                        (click)="submit(this.form?.value)"> Valider </button>
+                                         (click)="submit(this.form?.value)"> Valider </button>
                                     <button mat-button class="w-25 btnBackTo" mat-raised-button color="accent"
                                         (click)="switchQuestions('signIn')"> Retour</button>
                                 </div>
                             </ng-container>
-                        </ng-container>
-                        <ng-container [ngSwitch]="questionType">
                             <ng-container *ngSwitchCase="'signUp'">
                                 <button mat-raised-button color="accent" (click)="submit(this.form?.value)"> S'inscrire
                                 </button>

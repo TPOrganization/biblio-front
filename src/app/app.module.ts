@@ -14,7 +14,8 @@ import { LoadingSpinnerComponent } from './_services/_ui/loading-spinner/loading
 import { DynamicFormQuestionComponent } from './_services/_ui/dynamic-form-question/dynamic-form-question.component'
 import { AuthComponent } from './components/auth/auth.component';
 import { CustomMatCardComponent } from './_services/_ui/custom-mat-card/custom-mat-card.component'
-import { DynamicFormComponent } from './_services/_ui/dynamic-form/dynamic-form.component'
+import { DynamicFormComponent } from './_services/_ui/dynamic-form/dynamic-form.component';
+import { SnackBarComponent } from './_services/_ui/snack-bar/snack-bar.component'
 
 
 
@@ -29,7 +30,8 @@ registerLocaleData(localeFr, 'fr')
         LoadingSpinnerComponent,
         DynamicFormComponent,
         AuthComponent,
-        CustomMatCardComponent
+        CustomMatCardComponent,
+        SnackBarComponent
     ],
     imports: [
         BrowserModule,

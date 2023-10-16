@@ -3,17 +3,19 @@
         <ng-container *ngSwitchCase="'textbox'">
             <ng-container *ngTemplateOutlet="questionBase; context: {$implicit:question}"></ng-container>
         </ng-container>
+        <ng-container *ngSwitchCase="'email'">
+            <ng-container *ngTemplateOutlet="questionBase; context: {$implicit:question}"></ng-container>
+        </ng-container>
         <ng-container *ngSwitchCase="'password'">
             <ng-container *ngTemplateOutlet="questionBase; context: {$implicit:question}"></ng-container>
         </ng-container>
     </div>
 
-    <div class="errorMessage" *ngIf="!isValid">{{question.label}} is required</div>
-
     <ng-template #questionBase let-question>
-        <mat-form-field class="width" appearance="outline">
+        <mat-form-field class="w-75" appearance="outline">
             <mat-label>{{question.label}}</mat-label>
             <input matInput [formControlName]="question.key" [id]="question.key" [type]="question.type">
+            <mat-error class="errorMessage" *ngIf="!isValid">{{getErrorMessage()}}</mat-error>
         </mat-form-field>
     </ng-template>
 </div>
