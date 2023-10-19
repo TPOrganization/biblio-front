@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core'
 import { Router } from '@angular/router'
-import { JwtHelperService } from '@auth0/angular-jwt'
-import { ApiUtilisateur } from 'src/app/_models/_services/_api/_database/utilisateur/utilisateur.entity'
 import { AppConfigService } from '../app-config.service'
 import { SnackbarService } from '../snackbar.service'
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse, Method } from 'axios'
 import axiosRetry from 'axios-retry'
+import { AuthService } from './auth/auth.service'
 
 export interface Params {
     [key: string]: any
@@ -24,8 +23,8 @@ export interface PostOptions {
     providedIn: 'root',
 })
 export class AxiosClientService {
-    private userKey: string = 'appCurentUser'
-    private tokenKey: string = 'appToken'
+    private userKey = 'appCurentUser'
+    private tokenKey = 'appToken'
     private axiosClient: AxiosInstance
     private baseUrl: string
 
@@ -41,16 +40,18 @@ export class AxiosClientService {
         axiosRetry(this.axiosClient, { retries: 3, retryDelay: () => { return 2000 } })
         this.baseUrl = `${this.appConfig.config.API_URL}${this.appConfig.config.API_PREFIX}`
 
-        // Add a request interceptor
-        this.axiosClient.interceptors.request.use((config): any => {
-            // Gestion Jwt ici
+        this.axiosClient.interceptors.request.use(
+            (config): any => {
+                const token = localStorage.getItem(this.tokenKey)
+                if (token) {
+                    config.headers.Authorization = 'Bearer ' + token
+                }
 
-            return config
-        }, (error) => {
-            return Promise.reject(this._handleError(error))
-        })
+                return config
+            }, (error) => {
+                return Promise.reject(this._handleError(error))
+            })
 
-        // Add a response interceptor
         this.axiosClient.interceptors.response.use((response: AxiosResponse) => {
             return this._handleResponse(response)
         }, (error: AxiosError) => {
@@ -83,6 +84,9 @@ export class AxiosClientService {
     public async delete<T>(options: GetOptions): Promise<T> { return this.axiosCall('delete', options) }
     public getAxiosClient(): AxiosInstance { return this.axiosClient }
     public getBaseUrl(): string { return this.baseUrl }
+
+    public getUserKey(): string { return this.userKey }
+    public getTokenKey = (): string => this.tokenKey //fait le return direct (sans les {})
 
     private _handleResponse = (data: AxiosResponse): AxiosResponse => {
         return data

@@ -1,6 +1,6 @@
-import { QuestionBase } from './question-base';
+import { QuestionBase } from './question-base'
 
-export class emailQuestion extends QuestionBase<string> {
-  override controlType = 'email';
-  override type = 'email';
+export class EmailQuestion extends QuestionBase<string> {
+    override controlType = 'email'
+    override type = 'email'
 }

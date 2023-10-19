@@ -1,0 +1,24 @@
+#snackbar-component {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 99;
+}
+
+.snackbar-component {
+    &_success,
+    &_error {
+        width: 250px;
+        height: 50px;
+        padding: 10px 20px;
+        border-radius: 5px;
+        margin: 10px;
+    }
+    &_success {
+        background-color: green;
+    }
+
+    &_error {
+        background-color: red;
+    }
+}

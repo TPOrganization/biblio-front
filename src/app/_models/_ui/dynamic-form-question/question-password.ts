@@ -1,6 +1,6 @@
-import { QuestionBase } from './question-base';
+import { QuestionBase } from './question-base'
 
 export class PasswordQuestion extends QuestionBase<string> {
-  override controlType = 'password';
-  override type = 'password';
+    override controlType = 'password'
+    override type = 'password'
 }

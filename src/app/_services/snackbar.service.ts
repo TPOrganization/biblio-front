@@ -6,7 +6,7 @@ export enum SnackbarItemType{
     Error
   }
   
-  export interface SnackbarItem{
+export interface SnackbarItem{
     type : SnackbarItemType,
     message : string
   }

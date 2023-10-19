@@ -1,23 +1,23 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { DynamicFormQuestionComponent } from './dynamic-form-question.component';
+import { DynamicFormQuestionComponent } from './dynamic-form-question.component'
 
 describe('DynamicFormQuestionComponent', () => {
-  let component: DynamicFormQuestionComponent;
-  let fixture: ComponentFixture<DynamicFormQuestionComponent>;
+    let component: DynamicFormQuestionComponent
+    let fixture: ComponentFixture<DynamicFormQuestionComponent>
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ DynamicFormQuestionComponent ]
+    beforeEach(async () => {
+        await TestBed.configureTestingModule({
+            declarations: [ DynamicFormQuestionComponent ]
+        })
+            .compileComponents()
+
+        fixture = TestBed.createComponent(DynamicFormQuestionComponent)
+        component = fixture.componentInstance
+        fixture.detectChanges()
     })
-    .compileComponents();
 
-    fixture = TestBed.createComponent(DynamicFormQuestionComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    it('should create', () => {
+        expect(component).toBeTruthy()
+    })
+})
