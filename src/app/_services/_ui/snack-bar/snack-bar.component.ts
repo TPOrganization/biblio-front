@@ -7,19 +7,15 @@ import { SnackbarItem, SnackbarService } from '../../snackbar.service'
     styleUrls: ['./snack-bar.component.scss']
 })
 export class SnackBarComponent implements OnInit {
-    typeOfSnackbarItems: 'sucess' | 'error'
     messages: SnackbarItem[] = []
 
     private _duration = 3000
 
     constructor(
-    private readonly snackbarService: SnackbarService,
-
-    ) {
-    }
+        private readonly snackbarService: SnackbarService,
+    ){}
 
     ngOnInit(): void {
-        this.switchQuestions(this.typeOfSnackbarItems)
         this.snackbarService.getSnackbarMessages().subscribe((snackbarItem: SnackbarItem) => {
             this.messages.push(snackbarItem)
             setTimeout(() => {
@@ -29,8 +25,6 @@ export class SnackBarComponent implements OnInit {
         })
     }
 
-    switchQuestions(type: 'sucess' | 'error') {
-        this.typeOfSnackbarItems = type
-    }
+
 }
 

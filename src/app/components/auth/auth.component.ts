@@ -19,9 +19,9 @@ export class AuthComponent implements OnInit {
     title: string
     form: FormGroup
     constructor(
-    public service: AuthQuestionService,
-    private authService: AuthService,
-    private snackbarService: SnackbarService
+        public service: AuthQuestionService,
+        private authService: AuthService,
+        private snackbarService: SnackbarService
     ) {
     }
 

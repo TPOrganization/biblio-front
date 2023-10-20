@@ -31,7 +31,7 @@ export class AuthService {
         try {
             const { accessToken, user }: { accessToken: string, user: ApiUser } = await this.axios.post({ path: `${this._path}/sign-in`, params: { login, password } })
             localStorage.setItem(this.axios.getTokenKey(), accessToken)
-            localStorage.setItem(this.axios.getUserKey(), JSON.stringify('user'))
+            localStorage.setItem(this.axios.getUserKey(), JSON.stringify(user))
             return { accessToken, user: new User(user) }
         } catch (error) {
             return error as AxiosError
