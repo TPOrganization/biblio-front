@@ -11,13 +11,14 @@ import { AxiosError } from 'axios'
 @Component({
     selector: 'app-auth',
     templateUrl: './auth.component.html',
-    styleUrls: ['./auth.component.scss']
+    styleUrls: ['./auth.component.scss'],
 })
 export class AuthComponent implements OnInit {
     questionType: 'signIn' | 'signUp' | 'forgotPassword' = 'signIn'
     questions: QuestionBase<any>[]
     title: string
     form: FormGroup
+
     constructor(
         public service: AuthQuestionService,
         private authService: AuthService,
@@ -46,6 +47,7 @@ export class AuthComponent implements OnInit {
                 this.title = 'Mot de passe oublié'
         }
     }
+    
     getFormGroup = (form: FormGroup) => this.form = form
 
     async submit(formValue: AuthForm) {

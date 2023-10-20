@@ -12,19 +12,20 @@
                                     <button class="btnPasswordForgot" (click)="switchQuestions('forgotPassword')"> Mot
                                         de passe oublié </button>
                                 </div>
-                                <button mat-raised-button color="accent" (click)="submit(this.form?.value)"> Se
+                                <button mat-raised-button color="accent" (click)="submit(this.form?.value)" [disabled]="!form?.valid" > Se
                                     connecter </button>
+                                    <!-- [disabled]="!form.valid" ne fonctionne pas QUE sur le btn se connecter -->
                             </ng-container>
                             <ng-container *ngSwitchCase="'forgotPassword'">
                                 <div class="row flex justify-content-evenly">
                                     <button mat-button class="w-25 btnValid" mat-raised-button color="accent"
-                                         (click)="submit(this.form?.value)"> Valider </button>
+                                         (click)="submit(this.form?.value)" [disabled]="!form?.valid"> Valider </button>
                                     <button mat-button class="w-25 btnBackTo" mat-raised-button color="accent"
                                         (click)="switchQuestions('signIn')"> Retour</button>
                                 </div>
                             </ng-container>
                             <ng-container *ngSwitchCase="'signUp'">
-                                <button mat-raised-button color="accent" (click)="submit(this.form?.value)"> S'inscrire
+                                <button mat-raised-button color="accent" (click)="submit(this.form?.value)" [disabled]="!form?.valid"> S'inscrire
                                 </button>
                             </ng-container>
                         </ng-container>

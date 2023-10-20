@@ -25,10 +25,16 @@ export class DynamicFormComponent implements OnChanges {
         this.submitEvent.emit(this.form.getRawValue())
     }
 
+
     toFormGroup() {
         const group: any = {}
         this.questions?.forEach(question => {
-            group[question.key] = new FormControl(question.value || '', question.required ? [Validators.required] : [])
+            const validators = question.validators
+            if (question.required) {
+                validators.push(Validators.required)
+            }
+
+            group[question.key] = new FormControl(question.value || '', validators)
         })
         return new FormGroup(group)
     }

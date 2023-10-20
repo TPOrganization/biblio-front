@@ -44,22 +44,9 @@ body {
             color: (
                 primary: $main-dark,
                 accent: $main-dark,
-                warn: $main-dark
-            )
-        )
-    );
-    @include angular-material-theme($app-dark-theme);
-}
-
-.error-theme {
-    $app-error-theme: mat.define-light-theme(
-        (
-            color: (
-                primary: $main-error,
-                accent: $main-error,
                 warn: $main-error
             )
         )
     );
-    @include angular-material-theme($app-error-theme);
+    @include angular-material-theme($app-dark-theme);
 }

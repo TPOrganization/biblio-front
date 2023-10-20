@@ -1,14 +1,16 @@
 import { Injectable } from '@angular/core'
+import { Validators } from '@angular/forms'
 import { QuestionBase } from '../../_models/_ui/dynamic-form-question/question-base'
 import { TextboxQuestion } from '../../_models/_ui/dynamic-form-question/question-textbox'
 import { PasswordQuestion } from '../../_models/_ui/dynamic-form-question/question-password'
 import { EmailQuestion } from 'src/app/_models/_ui/dynamic-form-question/question-email'
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class AuthQuestionService {
 
     getSignUpQuestions() {
-
         const questions: QuestionBase<string>[] = [
 
             new TextboxQuestion({
@@ -39,12 +41,14 @@ export class AuthQuestionService {
                 key: 'password',
                 label: 'Mot de passe',
                 required: true,
+                validators: [Validators.minLength(8)],
                 order: 4
             }),
 
             new PasswordQuestion({
                 key: 'passwordConfirm',
                 label: 'Confirmation du mot de passe',
+                validators: [Validators.minLength(8)],
                 required: true,
                 order: 5
             }),
@@ -84,7 +88,7 @@ export class AuthQuestionService {
                 key: 'email',
                 label: 'Adresse mail',
                 type: 'email',
-                // required: true,
+                required: true,
                 order: 3
             }),
         ]

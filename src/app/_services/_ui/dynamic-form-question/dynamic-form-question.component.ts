@@ -8,17 +8,27 @@ import { FormGroup } from '@angular/forms'
     styleUrls: ['./dynamic-form-question.component.scss']
 })
 export class DynamicFormQuestionComponent {
-  @Input() question!: QuestionBase<string>
-  @Input() form!: FormGroup
+    @Input() question!: QuestionBase<string>
+    @Input() form!: FormGroup
 
 
-  get isValid(): boolean { return this.form.controls[this.question.key]?.valid ?? false }
+    get isValid(): boolean { return this.form.controls[this.question.key]?.valid ?? false }
 
-  getErrorMessage() {
-      if (this.question.required) {
-          return 'Vous devez remplir ce champs'
-      }
-      return '' //<= marche pas
-  }
+    getErrorMessage(): string | void {
+        const errorsForm = this.form.get(this.question.key)?.errors
+        if (errorsForm) {
+            for (const [key, value] of Object.entries(errorsForm)) {
+                console.log("key, value", key, value)
+                switch (key) {
+                    case 'email':
+                        return "L'email doit contenir un @" 
+                    case 'minlength':
+                        return `Le mot de passe doit contenir au minimun ${value['requiredLength']} caractères`
+                    case 'required':
+                        return "Le champs doit être renseigné"
+                }
+            }
+        }
+    }
 
 }
