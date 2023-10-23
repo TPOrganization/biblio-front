@@ -56,9 +56,14 @@ export class AuthService {
 
     async signUp(formValue: AuthForm): Promise<User | AxiosError> {
         try {
+            this.loadingSpinnerService.attachOverlay()
             const data: ApiUser = await this.axios.post({ path: `${this._path}/sign-up`, params: formValue })
+            this.loadingSpinnerService.detachOverlay();
+            this.isAuth = true
+            this.router.navigate(['/dashboard'])
             return new User(data)
         } catch (error) {
+            this.loadingSpinnerService.detachOverlay();
             return error as AxiosError
         }
     }

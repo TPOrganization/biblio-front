@@ -16,8 +16,8 @@ export class AuthGuardService {
 
     canActivate(): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
 
-        const userToken = this.authService.userToken
-        if (userToken) {
+        const userIsAuth = this.authService.isAuth
+        if (userIsAuth) {
             return true
         } else {
             this.router.navigate([''])

@@ -41,14 +41,14 @@ export class AuthQuestionService {
                 key: 'password',
                 label: 'Mot de passe',
                 required: true,
-                validators: [Validators.minLength(8)],
+                validators: [Validators.minLength(4)],
                 order: 4
             }),
 
             new PasswordQuestion({
                 key: 'passwordConfirm',
                 label: 'Confirmation du mot de passe',
-                validators: [Validators.minLength(8)],
+                validators: [Validators.minLength(4)],
                 required: true,
                 order: 5
             }),
