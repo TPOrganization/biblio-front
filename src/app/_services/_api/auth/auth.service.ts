@@ -4,6 +4,8 @@ import { AppConfigService } from '../../app-config.service'
 import { ApiUser, User } from 'src/app/_models/_services/_api/_database/user/user.models'
 import { AxiosError } from 'axios'
 import { Router } from '@angular/router'
+import { LoadingSpinnerService } from '../../overlay.service'
+import { OverlayRef } from '@angular/cdk/overlay';
 
 
 export interface AuthForm {
@@ -21,24 +23,33 @@ export class AuthService {
 
     private _path: string
     userToken: string
-
+    isAuth = false
+    overlayRef: OverlayRef
     constructor(
 
         private axios: AxiosClientService,
         private appConfigService: AppConfigService,
-        private router: Router
+        private router: Router,
+        public loadingSpinnerService: LoadingSpinnerService
+        
     ) {
         this._path = appConfigService.config.API_PATH.AUTH
     }
 
     async signIn(login: string, password: string): Promise<{ accessToken: string, user: User } | AxiosError> {
+        
         try {
+            this.loadingSpinnerService.attachOverlay()
             const { accessToken, user }: { accessToken: string, user: ApiUser } = await this.axios.post({ path: `${this._path}/sign-in`, params: { login, password } })
             localStorage.setItem(this.axios.getTokenKey(), accessToken)
             localStorage.setItem(this.axios.getUserKey(), JSON.stringify(user))
             this.userToken = accessToken
+            this.isAuth = true
+            this.loadingSpinnerService.detachOverlay();
+            this.router.navigate(['/dashboard'])
             return { accessToken, user: new User(user) }
         } catch (error) {
+            this.loadingSpinnerService.detachOverlay();
             return error as AxiosError
         }
     }

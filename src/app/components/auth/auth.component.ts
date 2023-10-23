@@ -55,14 +55,12 @@ export class AuthComponent implements OnInit {
             case 'signIn':
                 const signInResult = await this.authService.signIn(formValue.email, formValue.password)
                 signInResult instanceof AxiosError ?
-                    this.snackbarService.error('Erreur de connexion') :
-                    this.snackbarService.success('Connexion réussi')
-
+                    this.snackbarService.error('Erreur de connexion') : this.snackbarService.success('Connexion réussi')
                 break
             case 'signUp':
                 const signUpResult = await this.authService.signUp(formValue)
                 signUpResult instanceof User ?
-                    this.snackbarService.success('Compte créé, bienvenue ! ') :
+                    this.snackbarService.success('Compte créé, bienvenue ') :
                     this.snackbarService.error(' Erreur à la création du compte')
                 break
             case 'forgotPassword':

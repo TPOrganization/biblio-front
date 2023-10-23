@@ -15,7 +15,8 @@ import { DynamicFormQuestionComponent } from './_services/_ui/dynamic-form-quest
 import { AuthComponent } from './components/auth/auth.component'
 import { CustomMatCardComponent } from './_services/_ui/custom-mat-card/custom-mat-card.component'
 import { DynamicFormComponent } from './_services/_ui/dynamic-form/dynamic-form.component'
-import { SnackBarComponent } from './_services/_ui/snack-bar/snack-bar.component'
+import { SnackBarComponent } from './_services/_ui/snack-bar/snack-bar.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component'
 
 
 
@@ -31,7 +32,8 @@ registerLocaleData(localeFr, 'fr')
         DynamicFormComponent,
         AuthComponent,
         CustomMatCardComponent,
-        SnackBarComponent
+        SnackBarComponent,
+        DashboardComponent
     ],
     imports: [
         BrowserModule,

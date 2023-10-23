@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { Router, UrlTree } from '@angular/router';
+import { ActivatedRouteSnapshot, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { AuthService } from './_api/auth/auth.service';
 import { Observable } from 'rxjs';
 
@@ -17,11 +17,10 @@ export class AuthGuardService {
     canActivate(): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
 
         const userToken = this.authService.userToken
-        console.log(userToken)
         if (userToken) {
             return true
         } else {
-            this.router.navigateByUrl('')
+            this.router.navigate([''])
             return false
         }
     }
