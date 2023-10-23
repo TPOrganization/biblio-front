@@ -1,0 +1,38 @@
+@import "../../../assets/css/variables/breakpoints";
+@import "../../../assets/css/mixins/mixins";
+@import "../../../assets/css/variables/snackbar-position";
+
+#snackbar-component {
+    position: fixed;
+    left: 0;
+    z-index: 99;
+}
+
+.snackbar-component {
+   
+    &_success,
+    &_error {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 5px;
+        margin: 10px;
+        padding: 10px 30px;
+    }
+    &_success {
+        background-color: #235000;
+    }
+
+    &_error {
+        background-color: #a5342c;
+    }
+}
+
+@each $breakpoint in $breakpointsKeys {
+    @include mq($breakpoint) {
+        #snackbar-component{
+            top: map-get($snackbar-position-top, $breakpoint);
+            bottom: map-get($snackbar-position-bottom, $breakpoint);
+        }
+    }
+}

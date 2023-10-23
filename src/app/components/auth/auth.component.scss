@@ -1,3 +1,7 @@
+@import "../../../assets/css/variables/breakpoints";
+@import "../../../assets/css/mixins/mixins";
+@import "../../../assets/css/variables/width";
+
 .img-background {
     background-image: url("/assets/images/backgroundImgMPB.jpg");
     background-size: cover;
@@ -12,8 +16,20 @@
     background-color: white;
 }
 
-.disposition{
+.disposition {
     display: flex;
     justify-content: end;
-    margin: -16px 44px 43px 0px;
+    width: 89%;
+    padding-bottom: 50px;
 }
+
+
+@each $breakpoint in $breakpointsKeys {
+    @include mq($breakpoint) {
+        .custom-mat-card{
+            width: map-get($custom-card-widths, $breakpoint);
+        }
+    }
+}
+
+

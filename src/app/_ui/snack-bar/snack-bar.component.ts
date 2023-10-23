@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core'
-import { SnackbarItem, SnackbarService } from '../../snackbar.service'
+import { SnackbarItem, SnackbarService } from '../../_services/snackbar.service'
 
 @Component({
     selector: 'app-snack-bar',
