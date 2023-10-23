@@ -18,8 +18,12 @@ export interface AuthForm {
     providedIn: 'root'
 })
 export class AuthService {
+
     private _path: string
+    userToken: string
+
     constructor(
+
         private axios: AxiosClientService,
         private appConfigService: AppConfigService,
         private router: Router
@@ -32,6 +36,7 @@ export class AuthService {
             const { accessToken, user }: { accessToken: string, user: ApiUser } = await this.axios.post({ path: `${this._path}/sign-in`, params: { login, password } })
             localStorage.setItem(this.axios.getTokenKey(), accessToken)
             localStorage.setItem(this.axios.getUserKey(), JSON.stringify(user))
+            this.userToken = accessToken
             return { accessToken, user: new User(user) }
         } catch (error) {
             return error as AxiosError

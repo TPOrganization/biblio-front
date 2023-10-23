@@ -18,7 +18,6 @@ export class DynamicFormQuestionComponent {
         const errorsForm = this.form.get(this.question.key)?.errors
         if (errorsForm) {
             for (const [key, value] of Object.entries(errorsForm)) {
-                console.log("key, value", key, value)
                 switch (key) {
                     case 'email':
                         return "L'email doit contenir un @" 
