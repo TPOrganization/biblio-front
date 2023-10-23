@@ -14,5 +14,5 @@ export class ApiModelService<T, ApiT> {
         @Inject('') private readonly T: any
     ) { }
 
-    // Todo
+    // Todo (si findById dans le back alors faire le bon appel ici)
 }

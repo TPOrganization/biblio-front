@@ -5,7 +5,7 @@ import { ApiUser, User } from 'src/app/_models/_services/_api/_database/user/use
 import { AxiosError } from 'axios'
 import { Router } from '@angular/router'
 import { LoadingSpinnerService } from '../../overlay.service'
-import { OverlayRef } from '@angular/cdk/overlay';
+import { OverlayRef } from '@angular/cdk/overlay'
 
 
 export interface AuthForm {
@@ -45,11 +45,11 @@ export class AuthService {
             localStorage.setItem(this.axios.getUserKey(), JSON.stringify(user))
             this.userToken = accessToken
             this.isAuth = true
-            this.loadingSpinnerService.detachOverlay();
+            this.loadingSpinnerService.detachOverlay()
             this.router.navigate(['/dashboard'])
             return { accessToken, user: new User(user) }
         } catch (error) {
-            this.loadingSpinnerService.detachOverlay();
+            this.loadingSpinnerService.detachOverlay()
             return error as AxiosError
         }
     }
@@ -58,12 +58,12 @@ export class AuthService {
         try {
             this.loadingSpinnerService.attachOverlay()
             const data: ApiUser = await this.axios.post({ path: `${this._path}/sign-up`, params: formValue })
-            this.loadingSpinnerService.detachOverlay();
+            this.loadingSpinnerService.detachOverlay()
             this.isAuth = true
             this.router.navigate(['/dashboard'])
             return new User(data)
         } catch (error) {
-            this.loadingSpinnerService.detachOverlay();
+            this.loadingSpinnerService.detachOverlay()
             return error as AxiosError
         }
     }

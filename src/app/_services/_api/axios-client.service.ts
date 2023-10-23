@@ -4,7 +4,6 @@ import { AppConfigService } from '../app-config.service'
 import { SnackbarService } from '../snackbar.service'
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse, Method } from 'axios'
 import axiosRetry from 'axios-retry'
-import { AuthService } from './auth/auth.service'
 
 export interface Params {
     [key: string]: any

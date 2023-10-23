@@ -20,11 +20,11 @@ export class DynamicFormQuestionComponent {
             for (const [key, value] of Object.entries(errorsForm)) {
                 switch (key) {
                     case 'email':
-                        return "L'email doit contenir un @" 
+                        return 'L\'email doit contenir un @' 
                     case 'minlength':
                         return `Le mot de passe doit contenir au minimun ${value['requiredLength']} caractères`
                     case 'required':
-                        return "Le champs doit être renseigné"
+                        return 'Le champs doit être renseigné'
                 }
             }
         }
