@@ -16,12 +16,15 @@ export class AuthGuardService {
 
     canActivate(): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
 
-        const userIsAuth = this.authService.isAuth
+        const userIsAuth = localStorage.getItem('appToken') 
         if (userIsAuth) {
             return true
         } else {
-            this.router.navigate([''])
+            this.router.navigate(['/'])
             return false
         }
     }
+
+
+
 }

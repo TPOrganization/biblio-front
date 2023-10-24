@@ -23,7 +23,6 @@ export class AuthService {
 
     private _path: string
     userToken: string
-    isAuth = false
     overlayRef: OverlayRef
     constructor(
 
@@ -44,7 +43,6 @@ export class AuthService {
             localStorage.setItem(this.axios.getTokenKey(), accessToken)
             localStorage.setItem(this.axios.getUserKey(), JSON.stringify(user))
             this.userToken = accessToken
-            this.isAuth = true
             this.loadingSpinnerService.detachOverlay()
             this.router.navigate(['/dashboard'])
             return { accessToken, user: new User(user) }
@@ -59,7 +57,6 @@ export class AuthService {
             this.loadingSpinnerService.attachOverlay()
             const data: ApiUser = await this.axios.post({ path: `${this._path}/sign-up`, params: formValue })
             this.loadingSpinnerService.detachOverlay()
-            this.isAuth = true
             this.router.navigate(['/dashboard'])
             return new User(data)
         } catch (error) {
