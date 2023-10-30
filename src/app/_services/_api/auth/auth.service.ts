@@ -6,7 +6,12 @@ import { AxiosError } from 'axios'
 import { Router } from '@angular/router'
 import { LoadingSpinnerService } from '../../overlay.service'
 import { OverlayRef } from '@angular/cdk/overlay'
+import { Observable, catchError, from, map, of } from 'rxjs'
 
+export interface AuthReponse{
+    accessToken: string
+    user: User
+}
 
 export interface AuthForm {
     email: string
@@ -23,6 +28,8 @@ export class AuthService {
 
     private _path: string
     userToken: string
+    userLogIn: User
+    isAuthenticated : boolean
     overlayRef: OverlayRef
     constructor(
 
@@ -35,7 +42,7 @@ export class AuthService {
         this._path = appConfigService.config.API_PATH.AUTH
     }
 
-    async signIn(username: string, password: string): Promise<{ accessToken: string, user: User } | AxiosError> {
+    async signIn(username: string, password: string): Promise< AuthReponse | AxiosError> {
         
         try {
             this.loadingSpinnerService.attachOverlay()
@@ -51,6 +58,25 @@ export class AuthService {
             return error as AxiosError
         }
     }
+
+
+    isAuth(): Observable<AuthReponse | false> {
+        const observable = from(this.axios.get({ path: `${this._path}/user` })) as Observable<AuthReponse>
+        return observable.pipe(
+            map(data => {
+                if (data.user) {
+                    if (!this.userLogIn) {
+                        const localStorageUser = localStorage.getItem(this.userToken)
+                        this.userLogIn = new User(localStorageUser ? JSON.parse(localStorageUser) : data.user)
+                    }
+                    this.isAuthenticated = true
+                }
+                return data
+            }),
+            catchError(() => of(false as const))
+        )
+    }
+
 
     async signUp(formValue: AuthForm): Promise<User | AxiosError> {
         try {

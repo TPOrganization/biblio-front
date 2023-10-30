@@ -65,7 +65,7 @@
 </div>
 
 <ng-template #dashboardTitleTemplate>
-    <h1 class="title-app color-main-dark_500 m-0"> Hello, Angélique </h1>
+    <h1 class="title-app color-main-dark_500 m-0"> Hello, {{firstName}} </h1>
     <p class="color-main-dark_500"> <i> Qu'est ce qu'on lit aujourd'hui ? </i></p>
 </ng-template>
 
@@ -77,6 +77,6 @@
 </ng-template>
 
 <ng-template #headerIconsTemplate>
-    <mat-icon class="profil-icon" color="primary"> account_circle </mat-icon>
+    <mat-icon class="profil-icon" color="primary" (click)="userProfil()"> account_circle </mat-icon>
     <mat-icon class="color-main-dark_500" (click)="logOut()">exit_to_app</mat-icon>
 </ng-template>

@@ -16,7 +16,8 @@ import { AuthComponent } from './components/auth/auth.component'
 import { CustomMatCardComponent } from './_ui/custom-mat-card/custom-mat-card.component'
 import { DynamicFormComponent } from './_ui/dynamic-form/dynamic-form.component'
 import { SnackBarComponent } from './_ui/snack-bar/snack-bar.component'
-import { DashboardComponent } from './components/dashboard/dashboard.component'
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { UserProfilComponent } from './components/user-profil/user-profil.component'
 
 const appInitializerFn = (appConfigService: AppConfigService) => () => appConfigService.loadAppConfig()
 
@@ -31,7 +32,8 @@ registerLocaleData(localeFr, 'fr')
         AuthComponent,
         CustomMatCardComponent,
         SnackBarComponent,
-        DashboardComponent
+        DashboardComponent,
+        UserProfilComponent
     ],
     imports: [
         BrowserModule,

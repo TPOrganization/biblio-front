@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core'
+import { Router } from '@angular/router'
 import { User } from 'src/app/_models/_services/_api/_database/user/user.models'
 import { AuthService } from 'src/app/_services/_api/auth/auth.service'
 
@@ -11,19 +12,23 @@ import { AuthService } from 'src/app/_services/_api/auth/auth.service'
 export class DashboardComponent implements OnInit {
 
     user : User
+    firstName: string
 
     constructor(
-        private authService: AuthService
+        private authService: AuthService,
+        private router : Router
     ) { }
 
     ngOnInit(): void {
-        if(localStorage.getItem('appCurentUser')){
-            this.user = JSON.parse(localStorage.getItem('appCurentUser')  || '{}')
-        }
+        this.firstName = this.authService.userLogIn.firstName
     }
 
     logOut(){
         this.authService.logOut()
+    }
+
+    userProfil(){
+        this.router.navigate(['/user'])
     }
 
 }
