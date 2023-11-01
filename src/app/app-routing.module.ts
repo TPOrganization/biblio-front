@@ -4,11 +4,13 @@ import { AuthComponent } from './components/auth/auth.component'
 import { AuthGuardService } from './_services/auth-guard.service'
 import { DashboardComponent } from './components/dashboard/dashboard.component'
 import { UserProfilComponent } from './components/user-profil/user-profil.component'
+import { BooksComponent } from './components/books/books.component'
 
 const routes: Routes = [
     { path: '', component: AuthComponent },
     { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuardService] },
     { path: 'user', component: UserProfilComponent, canActivate: [AuthGuardService] },
+    { path: 'book', component: BooksComponent, canActivate: [AuthGuardService] },
     { path: '**', redirectTo: '' },
 ]
 @NgModule({

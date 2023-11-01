@@ -4,8 +4,8 @@
             <button mat-mini-fab color="primary" (click)="retourTo()">
                 <mat-icon>keyboard_backspace</mat-icon>
             </button>
-            <div class="d-flex justify-content-center"> <b> {{title}} </b> </div>
-            <mat-icon class="profil-icon" color=""> account_circle </mat-icon>
+            <h1 class="d-flex justify-content-center"> <b> {{title}} </b> </h1>
+            <mat-icon class="profil-icon"> account_circle </mat-icon>
         </div>
     </div>
     <div class="rounded background-white col-sm-12 h-75 box-shadow flex-2 ">
@@ -15,23 +15,28 @@
             </button>
         </div>
         <ng-container [ngSwitch]="questionType">
-            <ng-container *ngSwitchCase="'user-profil'">
-                <div class="row d-flex flex-column align-items-center justify-content-center">
-                    <span class="w-75 d-flex justify-content-center"> <b> {{lastName}} {{firstName}} </b></span>
-                    <span class="w-75 d-flex justify-content-center"><i> {{email}} </i></span>
-                    <hr class="w-75 mt-5" />
-                </div>
-            </ng-container>
-            <ng-container *ngSwitchCase="'form'">
-                <div class="row d-flex flex-column align-items-center justify-content-center">
+            <div class="row d-flex flex-column align-items-center ps-4 pe-4">
+                <ng-container *ngSwitchCase="'user-profil'">
+                    <div class="d-flex flex-column align-items-center">
+                        <span class="w-75 d-flex justify-content-center"> <b> {{lastName}} {{firstName}} </b></span>
+                        <span class="w-75 d-flex justify-content-center"><i> {{email}} </i></span>
+                        <hr class="w-75 mt-5" />
+                    </div>
+                </ng-container>
+                <ng-container *ngSwitchCase="'form'">
                     <app-dynamic-form class="dark-theme w-100" [questions]="questions"
                         (submitEvent)="submitEvent.emit($event)"
                         (getFormGroup)="getFormGroup.emit($event)"></app-dynamic-form>
-                    <button mat-raised-button color="accent" class="w-25" [disabled]="!form?.valid"> Modifier </button>
-                    <!-- (click)="submit(this.form?.value)" -->
-                    <button mat-raised-button color="accent" class="w-25" (click)="switchQuestions('user-profil')"> Annuler </button>
-                </div>
-            </ng-container>
+                    <div class="row d-flex align-items-center justify-content-evenly">
+                        <button mat-raised-button color="accent" class="w-25 " [disabled]="!form?.valid"> Modifier
+                        </button>
+                        <!-- (click)="submit(this.form?.value)" -->
+                        <button mat-raised-button color="accent" class="w-25" (click)="switchQuestions('user-profil')">
+                            Annuler
+                        </button>
+                    </div>
+                </ng-container>
+            </div>
         </ng-container>
     </div>
 </div>

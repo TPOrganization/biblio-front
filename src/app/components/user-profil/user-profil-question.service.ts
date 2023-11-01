@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core'
-import { Validators } from '@angular/forms'
 import { QuestionBase } from '../../_models/_ui/dynamic-form-question/question-base'
 import { TextboxQuestion } from '../../_models/_ui/dynamic-form-question/question-textbox'
-import { PasswordQuestion } from '../../_models/_ui/dynamic-form-question/question-password'
 import { EmailQuestion } from 'src/app/_models/_ui/dynamic-form-question/question-email'
 
 @Injectable({
@@ -10,7 +8,7 @@ import { EmailQuestion } from 'src/app/_models/_ui/dynamic-form-question/questio
 })
 export class UserQuestionService {
 
-    getUpdateUser() {
+    getUpdateUserQuestion() {
         const questions: QuestionBase<string>[] = [
 
             new TextboxQuestion({

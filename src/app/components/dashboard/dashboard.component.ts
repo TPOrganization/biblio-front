@@ -27,8 +27,12 @@ export class DashboardComponent implements OnInit {
         this.authService.logOut()
     }
 
-    userProfil(){
+    goTouserProfil(){
         this.router.navigate(['/user'])
+    }
+
+    goTobook(){
+        this.router.navigate(['/book'])
     }
 
 }

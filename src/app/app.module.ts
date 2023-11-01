@@ -17,7 +17,8 @@ import { CustomMatCardComponent } from './_ui/custom-mat-card/custom-mat-card.co
 import { DynamicFormComponent } from './_ui/dynamic-form/dynamic-form.component'
 import { SnackBarComponent } from './_ui/snack-bar/snack-bar.component'
 import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { UserProfilComponent } from './components/user-profil/user-profil.component'
+import { UserProfilComponent } from './components/user-profil/user-profil.component';
+import { BooksComponent } from './components/books/books.component'
 
 const appInitializerFn = (appConfigService: AppConfigService) => () => appConfigService.loadAppConfig()
 
@@ -33,7 +34,8 @@ registerLocaleData(localeFr, 'fr')
         CustomMatCardComponent,
         SnackBarComponent,
         DashboardComponent,
-        UserProfilComponent
+        UserProfilComponent,
+        BooksComponent
     ],
     imports: [
         BrowserModule,

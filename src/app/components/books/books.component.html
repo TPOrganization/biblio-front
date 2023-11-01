@@ -1,0 +1,16 @@
+<div id="add-book" class="row m-0 h-100 overflow-auto flex-1">
+    <div class="row h-25 col-sm-12 m-0 position-relative d-flex flex-column">
+        <div class="row pt-3 align-items-center">
+            <button mat-mini-fab color="primary" (click)="retourTo()">
+                <mat-icon>keyboard_backspace</mat-icon>
+            </button>
+            <h1 class="d-flex justify-content-center"> <b> Ajouter un livre </b> </h1>
+        </div>
+    </div>
+    <div class="rounded background-white col-sm-12 box-shadow flex-2 ">
+        <div class="row p-4">
+            <app-dynamic-form class="dark-theme w-100" [questions]="questions" (submitEvent)="submitEvent.emit($event)"
+                (getFormGroup)="getFormGroup.emit($event)"></app-dynamic-form>
+        </div>
+    </div>
+</div>

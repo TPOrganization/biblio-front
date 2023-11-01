@@ -51,7 +51,7 @@ export class UserProfilComponent implements OnInit {
         break
       case 'form':
         this.title = 'Modifier mes informations'
-        this.questions = this.service.getUpdateUser()
+        this.questions = this.service.getUpdateUserQuestion()
     }
   }
 
