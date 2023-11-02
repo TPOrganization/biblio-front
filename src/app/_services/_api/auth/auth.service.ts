@@ -35,11 +35,11 @@ export class AuthService {
         this._path = appConfigService.config.API_PATH.AUTH
     }
 
-    async signIn(login: string, password: string): Promise<{ accessToken: string, user: User } | AxiosError> {
+    async signIn(username: string, password: string): Promise<{ accessToken: string, user: User } | AxiosError> {
         
         try {
             this.loadingSpinnerService.attachOverlay()
-            const { accessToken, user }: { accessToken: string, user: ApiUser } = await this.axios.post({ path: `${this._path}/sign-in`, params: { login, password } })
+            const { accessToken, user }: { accessToken: string, user: ApiUser } = await this.axios.post({ path: `${this._path}/sign-in`, params: { username, password } })
             localStorage.setItem(this.axios.getTokenKey(), accessToken)
             localStorage.setItem(this.axios.getUserKey(), JSON.stringify(user))
             this.userToken = accessToken

@@ -1,5 +1,19 @@
 // Définition des font-size ici
+
+@import "../../../assets/css/variables/custom_variables";
+
 @each $breakpoint in $breakpointsKeys {
     @include mq($breakpoint) {
+        $base-font-size: map-get($custom-font-size, $breakpoint);
+        p,
+        span,
+        label,
+        mat-label,
+        a {
+            font-size: calc($base-font-size * 4) !important;
+        }
+        h1 {
+            font-size: calc($base-font-size * 6) !important;
+        }
     }
 }

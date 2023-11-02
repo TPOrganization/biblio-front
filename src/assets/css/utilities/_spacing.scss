@@ -1,4 +1,5 @@
-@import "../variables/_spacing";
+@import "../variables/custom_variables";
+
 @for $i from 0 through 10 {
     .flex-#{$i} {
         flex: $i !important;

@@ -3,7 +3,7 @@
     "version": "0.0.0",
     "scripts": {
         "dev": "ng serve -o --proxy-config ./src/proxy.conf.json",
-        "dev:ip": "ng serve -o --proxy-config ./src/proxy.conf.json --host 10.0.0.22",
+        "dev:ip": "ng serve -o --proxy-config ./src/proxy.conf.json --host 10.0.0.35",
         "ng": "ng",
         "start": "ng serve",
         "build": "ng build",

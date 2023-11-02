@@ -18,8 +18,6 @@ import { DynamicFormComponent } from './_ui/dynamic-form/dynamic-form.component'
 import { SnackBarComponent } from './_ui/snack-bar/snack-bar.component'
 import { DashboardComponent } from './components/dashboard/dashboard.component'
 
-
-
 const appInitializerFn = (appConfigService: AppConfigService) => () => appConfigService.loadAppConfig()
 
 registerLocaleData(localeFr, 'fr')
