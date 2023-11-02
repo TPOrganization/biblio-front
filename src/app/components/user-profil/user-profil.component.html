@@ -26,10 +26,10 @@
                 </ng-container>
                 <ng-container *ngSwitchCase="'form'">
                     <div class="pt-5">
-                        <app-dynamic-form class="dark-theme w-100" [questions]="questions"
+                        <app-dynamic-form class="dark-theme w-100" [questions]="questions" (getFormGroup)="getFormGroup($event)"
                            ></app-dynamic-form>
                         <div class="row d-flex align-items-center justify-content-evenly">
-                            <button mat-raised-button color="accent" class="w-25 " (click)="submit(this.form?.value)" [disabled]="!form?.valid"> Modifier </button>
+                            <button mat-raised-button color="accent" class="w-25 " (click)="submit()" [disabled]="!form?.valid"> Modifier </button>
                             <button mat-raised-button color="accent" class="w-25" (click)="switchQuestions('user-profil')"> Annuler </button>
                         </div>
                     </div>

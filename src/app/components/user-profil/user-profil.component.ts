@@ -1,11 +1,13 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { QuestionBase } from 'src/app/_models/_ui/dynamic-form-question/question-base';
 import { FormGroup } from '@angular/forms'
 import { UserQuestionService } from './user-profil-question.service';
 import { AuthService } from 'src/app/_services/_api/auth/auth.service';
-import { ApiUser, User } from 'src/app/_models/_services/_api/_database/user/user.models';
-import { UserForm } from 'src/app/_services/_api/_database/api-model.service';
+import { User } from 'src/app/_models/_services/_api/_database/user/user.models';
+import { AxiosError } from 'axios';
+import { SnackbarService } from 'src/app/_services/snackbar.service';
+import { UserService } from 'src/app/_services/_api/_database/user/user.service';
 
 @Component({
   selector: 'app-user-profil',
@@ -17,7 +19,7 @@ export class UserProfilComponent implements OnInit {
 
   questions: QuestionBase<any>[]
   questionType: 'user-profil' | 'form' = 'user-profil'
-  
+
   title: string
 
   userLogIn: User
@@ -27,11 +29,13 @@ export class UserProfilComponent implements OnInit {
   email: string
 
   form: FormGroup
-  
+
   constructor(
     private router: Router,
     private service: UserQuestionService,
-    private authService: AuthService
+    private authService: AuthService,
+    private snackbarService: SnackbarService,
+    private userService: UserService,
   ) { }
 
   ngOnInit(): void {
@@ -42,6 +46,7 @@ export class UserProfilComponent implements OnInit {
     this.firstName = this.userLogIn.firstName
     this.email = this.userLogIn.email
   }
+
 
   switchQuestions(type: 'user-profil' | 'form') {
     this.questionType = type
@@ -56,10 +61,18 @@ export class UserProfilComponent implements OnInit {
     }
   }
 
+
   getFormGroup = (form: FormGroup) => this.form = form
 
-  async submit(formValue: UserForm) {
-    console.log(formValue)
+  async submit() {
+    const id = this.authService.userLogIn.id
+    console.log(id)
+    const formValue = this.form.value
+    if (formValue) {
+      const updateUserResult = await this.userService.update(id, formValue)
+      updateUserResult instanceof AxiosError ?
+        this.snackbarService.error('Erreur a la modification des informations') : this.snackbarService.success('Informations modifiées !')
+    }
   }
 
   retourTo() {

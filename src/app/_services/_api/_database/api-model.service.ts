@@ -1,15 +1,7 @@
-import { Inject, Injectable } from '@angular/core'
+import { Inject, Injectable, inject } from '@angular/core'
 import { LoadingSpinnerService } from '../../overlay.service'
 import { AxiosClientService } from '../axios-client.service'
 import { AxiosError } from 'axios'
-import { ApiUser, User } from 'src/app/_models/_services/_api/_database/user/user.models'
-
-
-export interface UserForm {
-    email: string
-    firstName: string
-    lastName: string
-}
 
 
 @Injectable({
@@ -18,27 +10,34 @@ export interface UserForm {
 export class ApiModelService<T, ApiT> {
 
     path!: string
-    constructor(
-        public readonly axios: AxiosClientService,
-        public loadingSpinnerService: LoadingSpinnerService
-        // @Inject('') private readonly T: any
-    ) { }
+    axios = inject(AxiosClientService)
+    loadingSpinnerService = inject(LoadingSpinnerService)
+    entity: any
 
+    constructor() { }
 
-    // async update(formValue: UserForm): Promise<User | AxiosError>{
-    //     try{
-    //         this.loadingSpinnerService.attachOverlay()
-    //         const data: ApiUser = await this.axios.post({path: `${this.path}/user/${id}`, params: formValue})
-    //         this.loadingSpinnerService.detachOverlay()
-    //         return data
-    //     }
-    //     catch (error) {
-    //         this.loadingSpinnerService.detachOverlay()
-    //         return error as AxiosError
-    //     }
-    // }
-    //update 
-    //create
-    //find
-    // Todo (si findById dans le back alors faire le bon appel ici)
+    async create(entity: ApiT): Promise<T | AxiosError> {
+        const data: ApiT | AxiosError = await this.axios.post({ path: `${this.path}`, params: entity as any })
+        return data instanceof AxiosError ? data : new this.entity(data)
+    }
+
+    async find(): Promise<T[] | AxiosError> {
+        const data: ApiT[] | AxiosError = await this.axios.get({ path: `${this.path}` })
+        return data instanceof AxiosError ? data : data.map(e => new this.entity(e))
+    }
+
+    async findOne(id: number): Promise<T | AxiosError> {
+        const data: ApiT | AxiosError = await this.axios.get({ path: `${this.path}/${id}` })
+        return data instanceof AxiosError ? data : this.entity(data)
+    }
+
+    async update(id: number, entity: T | AxiosError) {
+        const data: ApiT | AxiosError = await this.axios.patch({ path: `${this.path}/${id}`, params: entity as any })
+        return data instanceof AxiosError ? data : new this.entity(data)
+    }
+
+    async delete(id: number): Promise<boolean> {
+        const data: ApiT | AxiosError = await this.axios.delete({ path: `${this.path}/${id}` })
+        return data instanceof AxiosError ? data : this.entity(data)
+    }
 }

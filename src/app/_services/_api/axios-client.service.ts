@@ -79,6 +79,7 @@ export class AxiosClientService {
 
     public async get<T>(options: GetOptions): Promise<T> { return this.axiosCall('get', options) }
     public async post<T>(options: PostOptions): Promise<T> { return this.axiosCall('post', options) }
+    public async patch<T>(options: PostOptions): Promise<T> { return this.axiosCall('patch', options) }
     public async put<T>(options: PostOptions): Promise<T> { return this.axiosCall('put', options) }
     public async delete<T>(options: GetOptions): Promise<T> { return this.axiosCall('delete', options) }
     public getAxiosClient(): AxiosInstance { return this.axiosClient }
