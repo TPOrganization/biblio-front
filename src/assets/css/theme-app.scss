@@ -5,6 +5,7 @@
 @import "variables/font-sizes";
 @import "variables/palette";
 @import "variables/spacing";
+@import "variables/width";
 
 @import "fonts/fonts";
 
@@ -12,9 +13,13 @@
 
 @import "utilities/background-color";
 @import "utilities/border-color";
+@import "utilities/box-shadow";
+@import "utilities/btn";
+@import "utilities/opacity";
 @import "utilities/spacing";
 @import "utilities/text-color";
 @import "utilities/typography";
+
 
 @import "components/custom";
 @import "components/material";
@@ -24,8 +29,8 @@ $app-theme: mat.define-light-theme(
         color: (
             primary: $main-primary,
             accent: $main-accent,
-            warn: $main-warn,
-        ),
+            warn: $main-warn
+        )
     )
 );
 
@@ -34,3 +39,16 @@ body {
 }
 
 @include angular-material-theme($app-theme);
+
+.dark-theme {
+    $app-dark-theme: mat.define-light-theme(
+        (
+            color: (
+                primary: $main-dark,
+                accent: $main-dark,
+                warn: $main-error
+            )
+        )
+    );
+    @include angular-material-theme($app-dark-theme);
+}

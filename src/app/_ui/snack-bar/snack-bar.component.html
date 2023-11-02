@@ -1,0 +1,8 @@
+<div id="snackbar-component" class="snackbar-component">
+    <ng-container *ngFor="let item of messages">
+        <div [ngSwitch]="item.type">
+            <div *ngSwitchCase="0" class="snackbar-component_success">{{item.message}}</div>
+            <div *ngSwitchCase="1" class="snackbar-component_error">{{item.message}}</div>
+        </div>
+    </ng-container>
+</div>

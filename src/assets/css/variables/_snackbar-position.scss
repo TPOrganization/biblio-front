@@ -1,0 +1,30 @@
+$snackbar-position-top: (
+    default: inherit,
+    mobile11: inherit,
+    mobile12: inherit,
+    mobile13: inherit,
+    tablet1: inherit,
+    tablet2: inherit,
+    desktop1: inherit,
+    desktop2: 0,
+    desktop3: 0,
+    desktop4: 0,
+    desktop5: 0,
+    desktop6: 0,
+);
+
+$snackbar-position-bottom: (
+    default: 0,
+    mobile11: 0,
+    mobile12: 0,
+    mobile13: 0,
+    tablet1: 0,
+    tablet2: 0,
+    desktop1: inherit,
+    desktop2: inherit,
+    desktop3: inherit,
+    desktop4: inherit,
+    desktop5: inherit,
+    desktop6: inherit,
+);
+

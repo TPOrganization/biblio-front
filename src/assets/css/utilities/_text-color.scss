@@ -3,3 +3,12 @@
 .color-primary {
     color: mat-color($main-primary) !important;
 }
+
+.color-main-dark {
+    color: mat-color($main-dark) !important;
+        @each $s in $saturations {
+        &_#{$s} {
+            color: mat-color($main-dark, $s) !important;
+        }
+    }
+}

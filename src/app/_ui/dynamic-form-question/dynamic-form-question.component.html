@@ -1,0 +1,21 @@
+<div [formGroup]="form">
+    <div [ngSwitch]="question.controlType">
+        <ng-container *ngSwitchCase="'textbox'">
+            <ng-container *ngTemplateOutlet="questionBase; context: {$implicit:question}"></ng-container>
+        </ng-container>
+        <ng-container *ngSwitchCase="'email'">
+            <ng-container *ngTemplateOutlet="questionBase; context: {$implicit:question}"></ng-container>
+        </ng-container>
+        <ng-container *ngSwitchCase="'password'">
+            <ng-container *ngTemplateOutlet="questionBase; context: {$implicit:question}"></ng-container>
+        </ng-container>
+    </div>
+
+    <ng-template #questionBase let-question>
+        <mat-form-field class="w-75" appearance="outline">
+            <mat-label>{{question.label}}</mat-label>
+            <input matInput [formControlName]="question.key" [id]="question.key" [type]="question.type" [tabindex]="question.order">
+            <mat-error class="errorMessage" *ngIf="!isValid">{{getErrorMessage()}}</mat-error>
+        </mat-form-field>
+    </ng-template>
+</div>

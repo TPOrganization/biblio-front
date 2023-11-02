@@ -1,0 +1,35 @@
+@import "../../../assets/css/variables/breakpoints";
+@import "../../../assets/css/mixins/mixins";
+@import "../../../assets/css/variables/width";
+
+.img-background {
+    background-image: url("/assets/images/backgroundImgMPB.jpg");
+    background-size: cover;
+    background-position: center;
+    width: 626px;
+    height: 872px;
+    margin: auto;
+}
+
+.btnPasswordForgot {
+    border: none;
+    background-color: white;
+}
+
+.disposition {
+    display: flex;
+    justify-content: end;
+    width: 89%;
+    padding-bottom: 50px;
+}
+
+
+@each $breakpoint in $breakpointsKeys {
+    @include mq($breakpoint) {
+        .custom-mat-card{
+            width: map-get($custom-card-widths, $breakpoint);
+        }
+    }
+}
+
+

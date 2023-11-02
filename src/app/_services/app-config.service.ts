@@ -17,5 +17,7 @@ export class AppConfigService {
         this.appConfig = data
     }
 
-    get config() { return this.appConfig }
+    get config() {
+        return this.appConfig
+    }
 }
