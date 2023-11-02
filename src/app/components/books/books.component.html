@@ -9,7 +9,7 @@
     </div>
     <div class="rounded background-white col-sm-12 box-shadow flex-2 ">
         <div class="row p-4">
-            <app-dynamic-form class="dark-theme w-100" [questions]="questions" (submitEvent)="submitEvent.emit($event)"
+            <app-dynamic-form class="w-100" [questions]="questions" (submitEvent)="submitEvent.emit($event)"
                 (getFormGroup)="getFormGroup.emit($event)"></app-dynamic-form>
         </div>
     </div>

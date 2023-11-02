@@ -9,16 +9,24 @@
         <ng-container *ngSwitchCase="'password'">
             <ng-container *ngTemplateOutlet="questionBase; context: {$implicit:question}"></ng-container>
         </ng-container>
-        <ng-container *ngSwitchCase="'textarea'">
-            <ng-container *ngTemplateOutlet="questionBase; context: {$implicit:question}"></ng-container>
-        </ng-container>
         <ng-container *ngSwitchCase="'chips'">
-            <ng-container *ngTemplateOutlet="questionBase; context: {$implicit:question}">
-            </ng-container>
+            <mat-label>{{question.label}}</mat-label>
+            <mat-chip-listbox selectable  multiple class="pb-4">
+                <mat-chip-option *ngFor="let opt of question.options" [value]="opt.key" color="primary">{{opt.value}}</mat-chip-option> 
+            </mat-chip-listbox>
+        </ng-container>
+        <ng-container *ngSwitchCase="'textarea'">
+            <mat-form-field  appearance="outline" class="w-100">
+                <textarea matInput placeholder="Commentaire" class="textareaHeight"></textarea>
+              </mat-form-field>
         </ng-container>
         <ng-container *ngSwitchCase="'datepicker'">
-            <ng-container *ngTemplateOutlet="questionBase; context: {$implicit:question}">
-            </ng-container>
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>{{question.label}}</mat-label>
+                <input [formControlName]="question.key" [id]="question.key" matInput [matDatepicker]="picker">
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
         </ng-container>
     </div>
 
@@ -27,7 +35,6 @@
             <mat-label>{{question.label}}</mat-label>
             <input matInput [formControlName]="question.key" [id]="question.key" [type]="question.type"
                 [tabindex]="question.order">
-                <mat-chip-option *ngFor="let opt of question.options" [value]="opt.key">{{opt.value}}</mat-chip-option> 
             <mat-error class="errorMessage" *ngIf="!isValid">{{getErrorMessage()}}</mat-error>
         </mat-form-field>
     </ng-template>

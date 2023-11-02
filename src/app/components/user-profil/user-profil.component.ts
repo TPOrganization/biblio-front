@@ -5,6 +5,7 @@ import { FormGroup } from '@angular/forms'
 import { UserQuestionService } from './user-profil-question.service';
 import { AuthService } from 'src/app/_services/_api/auth/auth.service';
 import { ApiUser, User } from 'src/app/_models/_services/_api/_database/user/user.models';
+import { UserForm } from 'src/app/_services/_api/_database/api-model.service';
 
 @Component({
   selector: 'app-user-profil',
@@ -14,19 +15,19 @@ import { ApiUser, User } from 'src/app/_models/_services/_api/_database/user/use
 
 export class UserProfilComponent implements OnInit {
 
-  @Input() questions: QuestionBase<string>[] | null = []
-  @Output() submitEvent = new EventEmitter<any>()
-  @Output() getFormGroup = new EventEmitter<FormGroup>()
-
-
+  questions: QuestionBase<any>[]
   questionType: 'user-profil' | 'form' = 'user-profil'
+  
   title: string
+
   userLogIn: User
+
   lastName: string
   firstName: string
   email: string
 
   form: FormGroup
+  
   constructor(
     private router: Router,
     private service: UserQuestionService,
@@ -53,6 +54,12 @@ export class UserProfilComponent implements OnInit {
         this.title = 'Modifier mes informations'
         this.questions = this.service.getUpdateUserQuestion()
     }
+  }
+
+  getFormGroup = (form: FormGroup) => this.form = form
+
+  async submit(formValue: UserForm) {
+    console.log(formValue)
   }
 
   retourTo() {
