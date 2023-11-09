@@ -1,15 +1,13 @@
-<div class="container-fluid h-100 text-center">
+<div id="auth" class="container-fluid h-100 text-center">
     <div class="row h-100 overflow-auto">
-        <div class="img-background rounded offset-3 col-6 box-shadow">
+        <div class="img-background custom-border-radius-mat-card offset-3 col-6 box-shadow">
             <div class="row h-100 flex-column">
                 <h1 class="pt-5 title-app color-main-dark_500"> MY POCKET <br> BOOKSHELF</h1>
                 <div class="flex-1 d-flex align-items-center justify-content-center">
                     <app-custom-mat-card class="custom-mat-card" [title]="title" [questions]="questions" (getFormGroup)="getFormGroup($event)">
                         <ng-container [ngSwitch]="questionType">
                             <ng-container *ngSwitchCase="'signIn'">
-                                <div class="disposition">
-                                    <button class="btnPasswordForgot" (click)="switchQuestions('forgotPassword')"> Mot de passe oublié ? </button>
-                                </div>
+                                    <button class="btn-password-forgot" (click)="switchQuestions('forgotPassword')"> Mot de passe oublié ? </button>
                                 <button mat-raised-button color="accent" (click)="submit(this.form?.value)"
                                     [disabled]="!form?.valid"> Se connecter </button>
                             </ng-container>

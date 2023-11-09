@@ -18,7 +18,8 @@ import { DynamicFormComponent } from './_ui/dynamic-form/dynamic-form.component'
 import { SnackBarComponent } from './_ui/snack-bar/snack-bar.component'
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { UserProfilComponent } from './components/user-profil/user-profil.component';
-import { BooksComponent } from './components/books/books.component'
+import { BooksComponent } from './components/books/books.component';
+import { BookInfosComponent } from './components/book-infos/book-infos.component'
 
 const appInitializerFn = (appConfigService: AppConfigService) => () => appConfigService.loadAppConfig()
 
@@ -35,7 +36,8 @@ registerLocaleData(localeFr, 'fr')
         SnackBarComponent,
         DashboardComponent,
         UserProfilComponent,
-        BooksComponent
+        BooksComponent,
+        BookInfosComponent
     ],
     imports: [
         BrowserModule,

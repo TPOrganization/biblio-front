@@ -3,5 +3,12 @@
         .custom-mat-card {
             width: map-get($custom-card-widths, $breakpoint);
         }
+        .custom-position-mat-card {
+            margin-top: map-get($custom-card-margin-top, $breakpoint);
+            margin-bottom: map-get($custom-card-margin-bottom, $breakpoint);
+        }
+        .custom-border-radius-mat-card {
+            border-radius: map-get($custom-card-border-radius, $breakpoint);
+        }
     }
 }

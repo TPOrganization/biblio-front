@@ -2,3 +2,6 @@
     margin: 0 50px;
 }
 
+::ng-deep .mdc-card {
+   border-radius: 30px !important;
+}

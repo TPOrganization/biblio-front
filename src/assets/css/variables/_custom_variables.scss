@@ -6,23 +6,23 @@
 
 //  Variables à modifier pour la taille des font size
 $custom-font-size: (
-    default: 3.5px,
-    mobile11: 3.5px,
-    mobile12: 3.5px,
-    mobile13: 3.5px,
-    tablet1: 4px,
-    tablet2: 4px,
-    desktop1: 5px,
-    desktop2: 5px,
-    desktop3: 5px,
-    desktop4: 5px,
-    desktop5: 5px,
-    desktop6: 5px,
+    default: 3px,
+    mobile11: 3px,
+    mobile12: 3px,
+    mobile13: 3px,
+    tablet1: 3px,
+    tablet2: 3px,
+    desktop1: 3.5px,
+    desktop2: 3.5px,
+    desktop3: 3.5px,
+    desktop4: 3.5px,
+    desktop5: 3.5px,
+    desktop6: 3.5px,
 );
 
 
 //  Variables à modifier pour la position de la snackbar
-$snackbar-position-top: (
+$custom-snackbar-position-top: (
     default: inherit,
     mobile11: inherit,
     mobile12: inherit,
@@ -37,7 +37,7 @@ $snackbar-position-top: (
     desktop6: 0,
 );
 
-$snackbar-position-bottom: (
+$custom-snackbar-position-bottom: (
     default: 0,
     mobile11: 0,
     mobile12: 0,
@@ -53,7 +53,7 @@ $snackbar-position-bottom: (
 );
 
 //  Variables à modifier pour l'ajustement
-$base-paddings-margins: (
+$custom-base-paddings-margins: (
     default: 4px,
     mobile11: 4.5px,
     mobile12: 6px,
@@ -83,4 +83,85 @@ $custom-card-widths: (
     desktop5: 80%,
     desktop6: 80%,
 );
+
+//  Variables à modifier pour ajuster la margin des cards
+
+$custom-card-margin-top: (
+    default: 30px,
+    mobile11: 0,
+    mobile12: 0,
+    mobile13: 0,
+    tablet1: 30px,
+    tablet2: 30px,
+    desktop1: 30px,
+    desktop2: 30px,
+    desktop3: 30px,
+    desktop4: 30px,
+    desktop5: 30px,
+    desktop6: 30px,
+);
+
+$custom-card-margin-bottom: (
+    default: 30px,
+    mobile11: 0,
+    mobile12: 0,
+    mobile13: 0,
+    tablet1: 30px,
+    tablet2: 30px,
+    desktop1: 30px,
+    desktop2: 30px,
+    desktop3: 30px,
+    desktop4: 30px,
+    desktop5: 30px,
+    desktop6: 30px,
+);
+
+//  Variables à modifier pour ajuster les border 
+$custom-card-border-radius: (
+    default: 20px,
+    mobile11: 0,
+    mobile12: 0,
+    mobile13: 0,
+    tablet1: 0,
+    tablet2: 0,
+    desktop1: 20px,
+    desktop2: 20px,
+    desktop3: 20px,
+    desktop4: 20px,
+    desktop5: 20px,
+    desktop6: 20px,
+);
+
+//  Variables à modifier pour ajuster les margins du dashboard
+$custom-dashboard-margin-top: (
+    default: 20px,
+    mobile11: 0,
+    mobile12: 0,
+    mobile13: 0,
+    tablet1: 0,
+    tablet2: 0,
+    desktop1: 50px,
+    desktop2: 50px,
+    desktop3: 50px,
+    desktop4: 50px,
+    desktop5: 50px,
+    desktop6: 50px,
+);
+
+$custom-dashboard-margin-bottom: (
+    default: 20px,
+    mobile11: 0,
+    mobile12: 0,
+    mobile13: 0,
+    tablet1: 0,
+    tablet2: 0,
+    desktop1: 50px,
+    desktop2: 50px,
+    desktop3: 50px,
+    desktop4: 50px,
+    desktop5: 50px,
+    desktop6: 50px,
+);
+
+
 

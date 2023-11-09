@@ -14,7 +14,7 @@
 .app-padding-margin {
     @each $breakpoint in $breakpointsKeys {
         @include mq($breakpoint) {
-            $base: map-get($base-paddings-margins, $breakpoint);
+            $base: map-get($custom-base-paddings-margins, $breakpoint);
         }
     }
 }

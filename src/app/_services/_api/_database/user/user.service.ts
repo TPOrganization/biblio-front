@@ -14,4 +14,6 @@ export class UserService extends ApiModelService<User, ApiUser> {
     super()
     this.path = appConfigService.config.API_PATH.USER
   }
+
+  
 }

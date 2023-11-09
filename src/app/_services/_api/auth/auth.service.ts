@@ -8,7 +8,7 @@ import { LoadingSpinnerService } from '../../overlay.service'
 import { OverlayRef } from '@angular/cdk/overlay'
 import { Observable, catchError, from, map, of } from 'rxjs'
 
-export interface AuthReponse{
+export interface AuthReponse {
     accessToken: string
     user: User
 }
@@ -29,7 +29,7 @@ export class AuthService {
     private _path: string
     userToken: string
     userLogIn: User
-    isAuthenticated : boolean
+    isAuthenticated: boolean
     overlayRef: OverlayRef
     constructor(
 
@@ -37,21 +37,23 @@ export class AuthService {
         private appConfigService: AppConfigService,
         private router: Router,
         public loadingSpinnerService: LoadingSpinnerService
-        
+
     ) {
         this._path = appConfigService.config.API_PATH.AUTH
     }
 
-    async signIn(username: string, password: string): Promise< AuthReponse | AxiosError> {
-        
+    getCurrentUserLabel = ():string => `${this.userLogIn.firstName} ${this.userLogIn.lastName}`
+
+    async signIn(username: string, password: string): Promise<AuthReponse | AxiosError> {
         try {
+
             this.loadingSpinnerService.attachOverlay()
             const { accessToken, user }: { accessToken: string, user: ApiUser } = await this.axios.post({ path: `${this._path}/sign-in`, params: { username, password } })
             localStorage.setItem(this.axios.getTokenKey(), accessToken)
             localStorage.setItem(this.axios.getUserKey(), JSON.stringify(user))
             this.userToken = accessToken
+            this.userLogIn = new User(user)
             this.loadingSpinnerService.detachOverlay()
-            this.router.navigate(['/dashboard'])
             return { accessToken, user: new User(user) }
         } catch (error) {
             this.loadingSpinnerService.detachOverlay()
@@ -59,16 +61,21 @@ export class AuthService {
         }
     }
 
+    private setUserLogin(user: ApiUser) {
+        console.log('setUserLogin =>', user)
+        const localStorageUser = localStorage.getItem(this.userToken)
+        console.log('setUserLogin  localStorageUser =>', localStorageUser)
+        this.userLogIn = new User(localStorageUser ? JSON.parse(localStorageUser) : user)
+        console.log('setUserLogin  userLogIn =>', this.userLogIn)
+    }
 
     isAuth(): Observable<AuthReponse | false> {
         const observable = from(this.axios.get({ path: `${this._path}/user` })) as Observable<AuthReponse>
         return observable.pipe(
             map(data => {
-                if (data.user) {
-                    if (!this.userLogIn) {
-                        const localStorageUser = localStorage.getItem(this.userToken)
-                        this.userLogIn = new User(localStorageUser ? JSON.parse(localStorageUser) : data.user)
-                    }
+                console.log('data =>', data)
+                if (data) {
+                    this.setUserLogin(data as any)
                     this.isAuthenticated = true
                 }
                 return data
@@ -83,7 +90,6 @@ export class AuthService {
             this.loadingSpinnerService.attachOverlay()
             const data: ApiUser = await this.axios.post({ path: `${this._path}/sign-up`, params: formValue })
             this.loadingSpinnerService.detachOverlay()
-            this.router.navigate(['/dashboard'])
             return new User(data)
         } catch (error) {
             this.loadingSpinnerService.detachOverlay()

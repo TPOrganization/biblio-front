@@ -11,7 +11,7 @@ export class DynamicFormQuestionComponent {
     @Input() question!: QuestionBase<string>
     @Input() form!: FormGroup
 
-
+    hide = true;
     get isValid(): boolean { return this.form.controls[this.question.key]?.valid ?? false }
 
     getErrorMessage(): string | void {

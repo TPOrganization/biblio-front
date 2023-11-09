@@ -11,14 +11,15 @@
     margin: auto;
 }
 
-.btnPasswordForgot {
+.btn-password-forgot {
     border: none;
-    background-color: white;
+    background-color: #ffffff00 !important;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding-bottom: 50px;
 }
 
-.disposition {
-    display: flex;
-    justify-content: end;
-    width: 89%;
-    padding-bottom: 50px;
+::ng-deep .mat-mdc-card-content {
+    width: 80%;
 }

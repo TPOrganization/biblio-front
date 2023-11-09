@@ -2,16 +2,25 @@ import { Injectable } from '@angular/core'
 import { Validators } from '@angular/forms'
 import { QuestionBase } from '../../_models/_ui/dynamic-form-question/question-base'
 import { TextboxQuestion } from '../../_models/_ui/dynamic-form-question/question-textbox'
-import { ChipsQuestion } from 'src/app/_models/_ui/dynamic-form-question/question-chips'
+import { ChipsNoMultipleQuestion } from 'src/app/_models/_ui/dynamic-form-question/question-chips-no-multiple'
 import { TextareaQuestion } from 'src/app/_models/_ui/dynamic-form-question/question-textarea'
 import { DatepickerQuestion } from 'src/app/_models/_ui/dynamic-form-question/question-datepicker'
+import { ChipsMultipleQuestion } from 'src/app/_models/_ui/dynamic-form-question/question-chips-multiple'
+import { Type } from 'src/app/_models/_services/_api/_database/type/type.models'
+import { Status } from 'src/app/_models/_services/_api/_database/status/status.models'
+import { Author } from 'src/app/_models/_services/_api/_database/author/author.models'
 
 @Injectable({
     providedIn: 'root'
 })
 export class BookQuestionService {
 
-    getAddBookQuestion() {
+    getAddBookQuestion(
+      types: Type[],
+      status: Status[],
+      author: Author[]
+      
+    ) {
         const questions: QuestionBase<string>[] = [
 
             new TextboxQuestion({
@@ -22,27 +31,28 @@ export class BookQuestionService {
                 order: 1
             }),
 
-            new TextboxQuestion({
-                key: 'author',
-                label: 'Auteur',
-                value: '',
-                required: true,
-                order: 2
+            new ChipsNoMultipleQuestion({
+              key: 'author_id',
+              label: 'Auteur',
+              options: author.map(e => {
+                return {
+                  key: e.id, value: e.name
+                }
+              }),
+              order: 2
             }),
 
-            new ChipsQuestion({
-                key: 'genre',
+            new ChipsMultipleQuestion({
+                key: 'type',
                 label: 'Genre littéraire',
-                options: [
-                  {key: '1',  value: 'Fantaisie'},
-                  {key: '2',  value: 'Comtemporain'},
-                  {key: '3',   value: 'Fiction'},
-                  {key: '4', value: 'Romance'}
-                ],
+                options: types.map(e => {
+                  return {
+                    key: e.id, value: e.label
+                  }
+                }),
                 order: 3
               }),
               
-
               new TextareaQuestion ({
                 key: 'comment',
                 label: 'Commentaire',
@@ -51,15 +61,14 @@ export class BookQuestionService {
                 order: 4
             }),
 
-              new ChipsQuestion({
-                key: 'status',
+              new ChipsNoMultipleQuestion({
+                key: 'statusId',
                 label: 'Statut',
-                options: [
-                  {key: '1',  value: 'A lire'},
-                  {key: '2',  value: 'En cours'},
-                  {key: '3',   value: 'Terminé'},
-                  {key: '4', value: 'Wishlist'}
-                ],
+                options: status.map(e => {
+                  return {
+                    key: e.id, value: e.label
+                  }
+                }),
                 order: 5
               }),
 
