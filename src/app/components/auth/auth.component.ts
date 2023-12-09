@@ -7,7 +7,6 @@ import { SnackbarService } from 'src/app/_services/snackbar.service'
 import { AxiosError } from 'axios'
 import { Router } from '@angular/router'
 
-
 @Component({
     selector: 'app-auth',
     templateUrl: './auth.component.html',
@@ -27,10 +26,8 @@ export class AuthComponent implements OnInit {
     ) {
     }
 
-    ngOnInit(): void {
-        this.switchQuestions(this.questionType)
-    }
-
+    ngOnInit(): void { this.switchQuestions(this.questionType) }
+    getFormGroup = (form: FormGroup) => this.form = form
     switchQuestions(type: 'signIn' | 'signUp' | 'forgotPassword') {
         this.questionType = type
 
@@ -48,8 +45,6 @@ export class AuthComponent implements OnInit {
                 this.title = 'Mot de passe oublié'
         }
     }
-
-    getFormGroup = (form: FormGroup) => this.form = form
 
     async submit(formValue: AuthForm) {
         switch (this.questionType) {
