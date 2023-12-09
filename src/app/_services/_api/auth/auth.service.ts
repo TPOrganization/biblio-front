@@ -46,17 +46,15 @@ export class AuthService {
 
     async signIn(username: string, password: string): Promise<AuthReponse | AxiosError> {
         try {
-
-            this.loadingSpinnerService.attachOverlay()
-            const { accessToken, user }: { accessToken: string, user: ApiUser } = await this.axios.post({ path: `${this._path}/sign-in`, params: { username, password } })
-            localStorage.setItem(this.axios.getTokenKey(), accessToken)
-            localStorage.setItem(this.axios.getUserKey(), JSON.stringify(user))
-            this.userToken = accessToken
-            this.userLogIn = new User(user)
-            this.loadingSpinnerService.detachOverlay()
-            return { accessToken, user: new User(user) }
+            return await this.loadingSpinnerService.attachCallbackInOverlay(async () => {
+                const { accessToken, user }: { accessToken: string, user: ApiUser } = await this.axios.post({ path: `${this._path}/sign-in`, params: { username, password } })
+                localStorage.setItem(this.axios.getTokenKey(), accessToken)
+                localStorage.setItem(this.axios.getUserKey(), JSON.stringify(user))
+                this.userToken = accessToken
+                this.userLogIn = new User(user)
+                return { accessToken, user: new User(user) }
+            })
         } catch (error) {
-            this.loadingSpinnerService.detachOverlay()
             return error as AxiosError
         }
     }
@@ -83,12 +81,11 @@ export class AuthService {
 
     async signUp(formValue: AuthForm): Promise<User | AxiosError> {
         try {
-            this.loadingSpinnerService.attachOverlay()
-            const data: ApiUser = await this.axios.post({ path: `${this._path}/sign-up`, params: formValue })
-            this.loadingSpinnerService.detachOverlay()
-            return new User(data)
+            return await this.loadingSpinnerService.attachCallbackInOverlay(async () => {
+                const data: ApiUser = await this.axios.post({ path: `${this._path}/sign-up`, params: formValue })
+                return new User(data)
+            })
         } catch (error) {
-            this.loadingSpinnerService.detachOverlay()
             return error as AxiosError
         }
     }

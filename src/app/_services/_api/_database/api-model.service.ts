@@ -17,38 +17,37 @@ export class ApiModelService<T, ApiT> {
     constructor() { }
 
     async create(entity: ApiT): Promise<T | AxiosError> {
-        this.loadingSpinnerService.attachOverlay()
-        const data: ApiT | AxiosError = await this.axios.post({ path: `${this.path}`, params: entity as any })
-        this.loadingSpinnerService.detachOverlay()
-        return data instanceof AxiosError ? data : new this.entity(data)
-
+        return await this.loadingSpinnerService.attachCallbackInOverlay(async () => {
+            const data: ApiT | AxiosError = await this.axios.post({ path: `${this.path}`, params: entity as any })
+            return data instanceof AxiosError ? data : new this.entity(data)
+        })
     }
 
     async find(): Promise<T[] | AxiosError> {
-        this.loadingSpinnerService.attachOverlay()
-        const data: ApiT[] | AxiosError = await this.axios.get({ path: `${this.path}` })
-        this.loadingSpinnerService.detachOverlay()
-        return data instanceof AxiosError ? data : data.map(e => new this.entity(e))
+        return await this.loadingSpinnerService.attachCallbackInOverlay(async () => {
+            const data: ApiT[] | AxiosError = await this.axios.get({ path: `${this.path}` })
+            return data instanceof AxiosError ? data : data.map(e => new this.entity(e))
+        })
     }
 
     async findOne(id: number): Promise<T | AxiosError> {
-        this.loadingSpinnerService.attachOverlay()
-        const data: ApiT | AxiosError = await this.axios.get({ path: `${this.path}/${id}` })
-        this.loadingSpinnerService.detachOverlay()
-        return data instanceof AxiosError ? data : new this.entity(data)
+        return await this.loadingSpinnerService.attachCallbackInOverlay(async () => {
+            const data: ApiT | AxiosError = await this.axios.get({ path: `${this.path}/${id}` })
+            return data instanceof AxiosError ? data : new this.entity(data)
+        })
     }
 
     async update(id: number, entity: ApiT | AxiosError) {
-        this.loadingSpinnerService.attachOverlay()
-        const data: ApiT | AxiosError = await this.axios.patch({ path: `${this.path}/${id}`, params: entity as any })
-        this.loadingSpinnerService.detachOverlay()
-        return data instanceof AxiosError ? data : new this.entity(data)
+        return await this.loadingSpinnerService.attachCallbackInOverlay(async () => {
+            const data: ApiT | AxiosError = await this.axios.patch({ path: `${this.path}/${id}`, params: entity as any })
+            return data instanceof AxiosError ? data : new this.entity(data)
+        })
     }
 
     async delete(id: number): Promise<boolean> {
-        this.loadingSpinnerService.attachOverlay()
-        const data: boolean = await this.axios.delete({ path: `${this.path}/${id}` })
-        this.loadingSpinnerService.detachOverlay()
-        return data 
+        return await this.loadingSpinnerService.attachCallbackInOverlay(async () => {
+            const data: boolean = await this.axios.delete({ path: `${this.path}/${id}` })
+            return data
+        })
     }
 }
