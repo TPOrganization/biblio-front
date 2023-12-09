@@ -10,7 +10,7 @@ import { AxiosError } from 'axios'
 import { MatDialogComponent } from 'src/app/_ui/mat-dialog/mat-dialog.component'
 import { MatDialog } from '@angular/material/dialog'
 import { BookInfosQuestionService } from './book-infos-question.service'
-import { formatDateFromMoment, isMobileDevice } from 'src/app/_helpers/tools'
+import { isMobileDevice } from 'src/app/_helpers/tools'
 import { SnackbarService } from 'src/app/_services/snackbar.service'
 import { TypesOfBooks } from 'src/app/_models/_services/_api/_database/typesOfBooks/typesOfBooks.models'
 
@@ -87,11 +87,11 @@ export class BookInfosComponent implements OnInit {
                 break
             case 'form-update':
                 if (this.isUpdate) {
-                    this.title = "Modifier les informations du livre"
-                    this.btnTxt = "Modifier"
+                    this.title = 'Modifier les informations du livre'
+                    this.btnTxt = 'Modifier'
                 } else {
-                    this.title = "Ajouter un livre"
-                    this.btnTxt = "Ajouter"
+                    this.title = 'Ajouter un livre'
+                    this.btnTxt = 'Ajouter'
                 }
                 this.questions = this.bookInfosQuestionService.getBookQuestion(
                     this._typesOfBooks,
@@ -124,7 +124,7 @@ export class BookInfosComponent implements OnInit {
             await this.bookService.update(this.bookSelectedInfos.id, newBook.getApiData()) :
             await this.bookService.create(newBook.getApiData())
         if (updateBookResult instanceof AxiosError) {
-            this.snackbarService.error("Erreur à la modification du livre")
+            this.snackbarService.error('Erreur à la modification du livre')
         } else {
             this.snackbarService.success(
                 this.isUpdate ? 'Livre modifié !' : 'Livre ajouté !'

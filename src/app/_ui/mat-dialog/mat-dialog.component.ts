@@ -26,11 +26,10 @@ export class MatDialogComponent {
     ) {
     }
 
-    async deleteBook(bookId: number) {
+    async deleteBook() {
         const deleteBookResult = await this.bookService.delete(this.data)
-        console.log(deleteBookResult)
         if (deleteBookResult !== true) {
-            this.snackbarService.error("Erreur à la suprression du livre")
+            this.snackbarService.error('Erreur à la suprression du livre')
         } else {
             this.snackbarService.success('Livre supprimé !')
             this.router.navigate(['/dashboard'])

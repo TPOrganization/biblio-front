@@ -49,7 +49,7 @@ export class UserProfilComponent implements OnInit {
     ) { }
 
     async ngOnInit(): Promise<void> {
-        this.textBtn = "Modifier les informations"
+        this.textBtn = 'Modifier les informations'
         this.isMobile = isMobileDevice()
 
         this.switchQuestions(this.questionType)
@@ -133,9 +133,9 @@ export class UserProfilComponent implements OnInit {
         const newUser = new User(formValue)
         const updateUserResult = await this.userService.update(id, newUser)
         if (updateUserResult instanceof AxiosError) {
-            this.snackbarService.error("Erreur à la modification des informations de l'utilisateur")
+            this.snackbarService.error('Erreur à la modification des informations de l\'utilisateur')
         } else {
-            this.snackbarService.success("Les informations de l'utilisateur ont bien été modifié  !")
+            this.snackbarService.success('Les informations de l\'utilisateur ont bien été modifié  !')
             this.router.navigate(['/dashboard'])
         }
     }

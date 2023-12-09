@@ -45,7 +45,7 @@ export class DashboardComponent implements OnInit {
     }
 
     createBook() {
-        this.router.navigate([`/book-infos`])
+        this.router.navigate(['/book-infos'])
     }
 
     bookInfos(id: number) {
