@@ -18,21 +18,23 @@
                 </button>
             </ng-container>
             <ng-container *ngSwitchDefault>
-                <button mat-raised-button color="accent" class="me-2" (click)="switchQuestions('form-update')">
-                    <mat-icon>create</mat-icon>
-                    Modifier les informations
-                </button>
-                <button mat-raised-button color="accent" (click)="openDialog()">
-                    <mat-icon>delete</mat-icon>
-                    Supprimer
-                </button>
+                <div class="ml-auto">
+                    <button mat-raised-button color="accent" class="me-2" (click)="switchQuestions('form-update')">
+                        <mat-icon>create</mat-icon>
+                        Modifier les informations
+                    </button>
+                    <button mat-raised-button color="accent" (click)="openDialog()">
+                        <mat-icon>delete</mat-icon>
+                        Supprimer
+                    </button>
+                </div>
             </ng-container>
         </ng-container>
     </ng-container>
 </ng-template>
 
 <ng-template #content1Template>
-    <div content1 class="d-flex flex-row align-items-center">
+    <div class="d-flex flex-row align-items-center">
         <ng-container [ngSwitch]="questionType">
             <ng-container *ngSwitchCase="'book-infos'">
                 <img class="img-book" src="../../../assets/images/HarryPotter.jpg" />

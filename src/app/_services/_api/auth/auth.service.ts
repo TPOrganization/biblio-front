@@ -5,7 +5,6 @@ import { ApiUser, User } from 'src/app/_models/_services/_api/_database/user/use
 import { AxiosError } from 'axios'
 import { Router } from '@angular/router'
 import { LoadingSpinnerService } from '../../overlay.service'
-import { OverlayRef } from '@angular/cdk/overlay'
 import { Observable, catchError, from, map, of } from 'rxjs'
 
 export interface AuthReponse {
@@ -26,51 +25,33 @@ export interface AuthForm {
 })
 export class AuthService {
 
-    private _path: string
-    userToken: string
     userLogIn: User
-    isAuthenticated: boolean
-    overlayRef: OverlayRef
+    private _path: string
+
     constructor(
-
-        private axios: AxiosClientService,
-        private appConfigService: AppConfigService,
-        private router: Router,
-        public loadingSpinnerService: LoadingSpinnerService
-
+        private readonly _axios: AxiosClientService,
+        private readonly _appConfigService: AppConfigService,
+        private readonly _router: Router,
+        private readonly _loadingSpinnerService: LoadingSpinnerService
     ) {
-        this._path = appConfigService.config.API_PATH.AUTH
+        this._path = this._appConfigService.config.API_PATH.AUTH
     }
 
     getCurrentUserLabel = (): string => `${this.userLogIn.firstName} ${this.userLogIn.lastName}`
 
-    async signIn(username: string, password: string): Promise<AuthReponse | AxiosError> {
-        try {
-            return await this.loadingSpinnerService.attachCallbackInOverlay(async () => {
-                const { accessToken, user }: { accessToken: string, user: ApiUser } = await this.axios.post({ path: `${this._path}/sign-in`, params: { username, password } })
-                localStorage.setItem(this.axios.getTokenKey(), accessToken)
-                localStorage.setItem(this.axios.getUserKey(), JSON.stringify(user))
-                this.userToken = accessToken
-                this.userLogIn = new User(user)
-                return { accessToken, user: new User(user) }
-            })
-        } catch (error) {
-            return error as AxiosError
-        }
-    }
-
-    private setUserLogin(user: ApiUser) {
-        const localStorageUser = localStorage.getItem(this.userToken)
-        this.userLogIn = new User(localStorageUser ? JSON.parse(localStorageUser) : user)
+    logOut() {
+        localStorage.removeItem(this._axios.getTokenKey())
+        localStorage.removeItem(this._axios.getUserKey())
+        this._router.navigate(['/'])
     }
 
     isAuth(): Observable<AuthReponse | false> {
-        const observable = from(this.axios.get({ path: `${this._path}/user` })) as Observable<AuthReponse>
+        const observable = from(this._axios.get({ path: `${this._path}/user` })) as Observable<AuthReponse>
         return observable.pipe(
             map(data => {
-                if (data) {
-                    this.setUserLogin(data as any)
-                    this.isAuthenticated = true
+                if (!this.userLogIn && data) {
+                    const localStorageUser = localStorage.getItem(this._axios.getUserKey())
+                    this.userLogIn = new User(localStorageUser ? JSON.parse(localStorageUser) : data.user)
                 }
                 return data
             }),
@@ -78,11 +59,22 @@ export class AuthService {
         )
     }
 
+    async signIn(username: string, password: string): Promise<boolean | AxiosError> {
+        try {
+            return await this._loadingSpinnerService.attachCallbackInOverlay(async (): Promise<boolean> => {
+                const { accessToken, user }: { accessToken: string, user: ApiUser } = await this._axios.post({ path: `${this._path}/sign-in`, params: { username, password } })
+                this._setLocalStorageAuth(user, accessToken)
+                return true
+            })
+        } catch (error) {
+            return error as AxiosError
+        }
+    }
 
     async signUp(formValue: AuthForm): Promise<User | AxiosError> {
         try {
-            return await this.loadingSpinnerService.attachCallbackInOverlay(async () => {
-                const data: ApiUser = await this.axios.post({ path: `${this._path}/sign-up`, params: formValue })
+            return await this._loadingSpinnerService.attachCallbackInOverlay(async () => {
+                const data: ApiUser = await this._axios.post({ path: `${this._path}/sign-up`, params: formValue })
                 return new User(data)
             })
         } catch (error) {
@@ -92,16 +84,15 @@ export class AuthService {
 
     async forgotPassword(email: string) {
         try {
-            const data = await this.axios.post({ path: `${this._path}/forgot-password`, params: { email } })
+            const data = await this._axios.post({ path: `${this._path}/forgot-password`, params: { email } })
             return data
         } catch (error) {
             return error as AxiosError
         }
     }
 
-    logOut() {
-        localStorage.removeItem(this.axios.getTokenKey())
-        localStorage.removeItem(this.axios.getUserKey())
-        this.router.navigate(['/'])
+    private _setLocalStorageAuth(user: ApiUser, token: string) {
+        if (token !== '') { localStorage.setItem(this._axios.getTokenKey(), token) }
+        localStorage.setItem(this._axios.getUserKey(), JSON.stringify(user))
     }
 }

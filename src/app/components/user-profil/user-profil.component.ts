@@ -22,7 +22,7 @@ import { SnackbarService } from 'src/app/_services/snackbar.service'
 
 export class UserProfilComponent implements OnInit {
 
-    public chart: any
+    chart: any
 
     status1: Book[] = []
     status2: Book[] = []
@@ -39,24 +39,59 @@ export class UserProfilComponent implements OnInit {
     isMobile: boolean
 
     constructor(
-        private router: Router,
-        private userQuestionService: UserQuestionService,
-        private userService: UserService,
-        private authService: AuthService,
-        private bookService: BookService,
-        private snackbarService: SnackbarService
-
+        private readonly _router: Router,
+        private readonly _userQuestionService: UserQuestionService,
+        private readonly _userService: UserService,
+        private readonly _authService: AuthService,
+        private readonly _bookService: BookService,
+        private readonly _snackbarService: SnackbarService
     ) { }
 
     async ngOnInit(): Promise<void> {
         this.textBtn = 'Modifier les informations'
         this.isMobile = isMobileDevice()
-
+        this.userLogIn = this._authService.userLogIn
+        await this._fetchData()
         this.switchQuestions(this.questionType)
+    }
 
-        this.userLogIn = this.authService.userLogIn
+    @HostListener('window:resize')
+    onResize() { this.isMobile = isMobileDevice() }
+    logOut() { this._authService.logOut() }
+    getFormGroup = (form: FormGroup) => { this.form = form }
+    switchQuestions(type: 'user-profil' | 'form') {
+        this.questionType = type
+        switch (type) {
+            case 'user-profil':
+                this.title = 'Mon profil'
+                this._initChart()
+                break
+            case 'form':
+                this.title = 'Modifier mes informations'
+                this.questions = this._userQuestionService.getUpdateUserQuestion()
+        }
 
-        const books = await this.bookService.find()
+    }
+
+    async submit(formValue: ApiUser) {
+        const id = this._authService.userLogIn.id
+        formValue = {
+            ...this.form.value,
+            id
+        }
+        const newUser = new User(formValue)
+        const updateUserResult = await this._userService.update(id, newUser)
+        if (updateUserResult instanceof AxiosError) {
+            this._snackbarService.error('Erreur à la modification des informations de l\'utilisateur')
+        } else {
+            this._authService.userLogIn = updateUserResult
+            this._snackbarService.success('Les informations de l\'utilisateur ont bien été modifié  !')
+            this._router.navigate(['/dashboard'])
+        }
+    }
+
+    private async _fetchData() {
+        const books = await this._bookService.find()
         if (!(books instanceof AxiosError)) {
             books.map(e => e.statusId)
             this.status1 = books.filter(e => e.statusId === 1)
@@ -64,89 +99,46 @@ export class UserProfilComponent implements OnInit {
             this.status3 = books.filter(e => e.statusId === 3)
             this.status4 = books.filter(e => e.statusId === 4)
         }
+    }
 
-        this.chart = new Chart('MyChart', {
-            type: 'doughnut',
-            data: {// values on X-Axis
-                datasets: [
-                    {
-                        data: [
-                            this.status1.length,
-                            this.status2.length,
-                            this.status3.length,
-                            this.status4.length
-                        ],
-                        backgroundColor: [
-                            '#FF8B85',
-                            '#8DD6FF',
-                            '#AFCBA5',
-                            '#DB82DD'
-                        ],
-                    },
+    private _initChart() {
+        setTimeout(() => { // Erreur lors du reset
+            this.chart?.destroy()
+            this.chart = new Chart('MyChart', {
+                type: 'doughnut',
+                data: {// values on X-Axis
+                    datasets: [
+                        {
+                            data: [
+                                this.status1.length,
+                                this.status2.length,
+                                this.status3.length,
+                                this.status4.length
+                            ],
+                            backgroundColor: [
+                                '#FF8B85',
+                                '#8DD6FF',
+                                '#AFCBA5',
+                                '#DB82DD'
+                            ],
+                        },
 
-                ],
-                labels: ['A lire', 'En cours', 'Terminé', 'Whishlist'],
-            },
-            options: {
-                aspectRatio: 1.1,
-                parsing: {
-                    key: 'test.value'
+                    ],
+                    labels: ['A lire', 'En cours', 'Terminé', 'Whishlist'],
                 },
-                plugins: {
-                    legend: {
-                        display: true,
-                        position: 'bottom'
+                options: {
+                    aspectRatio: 1.1,
+                    parsing: {
+                        key: 'test.value'
+                    },
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'bottom'
+                        }
                     }
                 }
-            }
-
+            })
         })
     }
-
-    @HostListener('window:resize')
-    onResize() {
-        this.isMobile = isMobileDevice()
-    }
-
-    switchQuestions(type: 'user-profil' | 'form') {
-        this.questionType = type
-        switch (type) {
-            case 'user-profil':
-                this.title = 'Mon profil'
-                break
-            case 'form':
-                this.title = 'Modifier mes informations'
-                this.questions = this.userQuestionService.getUpdateUserQuestion()
-        }
-    }
-
-    getFormGroup = (form: FormGroup) => {
-        this.form = form
-    }
-
-    async submit(formValue: ApiUser) {
-        const id = this.authService.userLogIn.id
-        formValue = {
-            ...this.form.value,
-            id
-        }
-        const newUser = new User(formValue)
-        const updateUserResult = await this.userService.update(id, newUser)
-        if (updateUserResult instanceof AxiosError) {
-            this.snackbarService.error('Erreur à la modification des informations de l\'utilisateur')
-        } else {
-            this.snackbarService.success('Les informations de l\'utilisateur ont bien été modifié  !')
-            this.router.navigate(['/dashboard'])
-        }
-    }
-
-
-    retourTo() {
-        this.router.navigate(['/dashboard'])
-    }
-
-    logOut() {
-        this.authService.logOut()
-    }
-
 }

@@ -9,7 +9,7 @@ const routes: Routes = [
     { path: '', component: AuthComponent },
     { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuardService] },
     { path: 'user', component: UserProfilComponent, canActivate: [AuthGuardService] },
-    { path: 'book-infos/:id', component: BookInfosComponent, canActivate: [AuthGuardService]},
+    { path: 'book-infos/:id', component: BookInfosComponent, canActivate: [AuthGuardService] },
     { path: 'book-infos', component: BookInfosComponent, canActivate: [AuthGuardService], },
     { path: '**', redirectTo: '' },
 ]

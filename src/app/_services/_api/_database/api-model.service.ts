@@ -37,7 +37,7 @@ export class ApiModelService<T, ApiT> {
         })
     }
 
-    async update(id: number, entity: ApiT | AxiosError) {
+    async update(id: number, entity: ApiT): Promise<T | AxiosError> {
         return await this.loadingSpinnerService.attachCallbackInOverlay(async () => {
             const data: ApiT | AxiosError = await this.axios.patch({ path: `${this.path}/${id}`, params: entity as any })
             return data instanceof AxiosError ? data : new this.entity(data)
