@@ -66,14 +66,16 @@
                     </div>
                     <hr class="w-50 mt-1 mb-2" />
                     <div class="chips row pt-4 pb-3">
-                        <mat-chip-listbox aria-label="genre-selection">
-                            <mat-chip *ngFor="let type of typesOfBooks" class="box-shadow-chip">
-                                {{type}}
-                            </mat-chip>
+                        <mat-chip-listbox aria-label="genre-selection" [(ngModel)]="typesOfBooksSelected"
+                            [selectable]="true" [multiple]="true" (ngModelChange)="typesOfBooksSelectedChange()">
+                            <mat-chip-option *ngFor="let type of typesOfBooks" [value]="type.id"
+                                class="box-shadow-chip">
+                                {{type.label}}
+                            </mat-chip-option>
                         </mat-chip-listbox>
                         <div class="w-100">
                             <div class="d-flex flex-wrap justify-content-center">
-                                <div *ngIf="!booksOfUser.length else bookshelfTemplate">
+                                <div *ngIf="!booksFiltered.length else bookshelfTemplate">
                                     <div class="m-4 p-0 d-flex flex-column align-items-center">
                                         Aucuns livres dans la Bibliothèque
                                         <img src="../../../assets/images/undraw_bibliophile_re_xarc.svg" height="200"
@@ -82,7 +84,7 @@
                                 </div>
                             </div>
                             <ng-template #bookshelfTemplate>
-                                <div *ngFor="let book of booksOfUser">
+                                <div *ngFor="let book of booksFiltered">
                                     <div class="shapeOfCover m-4 p-0" (click)="bookInfos(book.id)">
                                         {{book.title}}
                                     </div>
@@ -115,7 +117,8 @@
 
 <ng-template #dashboardSearchInputTemplate>
     <mat-form-field class="dark-theme search-bar w-100">
-        <input matInput placeholder="Titre, auteur...">
+        <input matInput placeholder="Titre, auteur..." [(ngModel)]="bookAuthorFilter"
+            (ngModelChange)="bookAuthorFilterChange($event)">
         <mat-icon matPrefix>search</mat-icon>
     </mat-form-field>
 </ng-template>

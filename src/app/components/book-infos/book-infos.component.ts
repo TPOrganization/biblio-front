@@ -120,7 +120,7 @@ export class BookInfosComponent implements OnInit {
             })
         }
         const newBook = new Book(newApiBook)
-        newBook.id === this.bookSelectedInfos?.id ?? 0
+        newBook.id = this.bookSelectedInfos?.id ?? 0
         const updateBookResult = this.isUpdate ?
             await this._bookService.update(newBook.id, newBook.getApiData()) :
             await this._bookService.create(newBook.getApiData())
