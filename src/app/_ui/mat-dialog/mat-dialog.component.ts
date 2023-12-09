@@ -1,9 +1,7 @@
 import { Component, Inject } from '@angular/core'
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog'
+import { MAT_DIALOG_DATA } from '@angular/material/dialog'
 import { Router } from '@angular/router'
-import { AxiosError, AxiosResponse } from 'axios'
 import { BookService } from 'src/app/_services/_api/_database/book/book.service'
-import { LoadingSpinnerService } from 'src/app/_services/overlay.service'
 import { SnackbarService } from 'src/app/_services/snackbar.service'
 
 @Component({
@@ -13,26 +11,22 @@ import { SnackbarService } from 'src/app/_services/snackbar.service'
 })
 export class MatDialogComponent {
 
-    axiosResponse: AxiosResponse
-    axiosError: AxiosError
     constructor(
         @Inject(MAT_DIALOG_DATA)
-        public data: number,
-        public dialogRef: MatDialogRef<MatDialogComponent>,
-        public loadingSpinnerService: LoadingSpinnerService,
-        private bookService: BookService,
-        private snackbarService: SnackbarService,
-        private router: Router
+        private readonly _data: number,
+        private readonly _bookService: BookService,
+        private readonly _snackbarService: SnackbarService,
+        private readonly _router: Router
     ) {
     }
 
     async deleteBook() {
-        const deleteBookResult = await this.bookService.delete(this.data)
+        const deleteBookResult = await this._bookService.delete(this._data)
         if (deleteBookResult !== true) {
-            this.snackbarService.error('Erreur à la suprression du livre')
+            this._snackbarService.error('Erreur à la suprression du livre')
         } else {
-            this.snackbarService.success('Livre supprimé !')
-            this.router.navigate(['/dashboard'])
+            this._snackbarService.success('Livre supprimé !')
+            this._router.navigate(['/dashboard'])
         }
     }
 }

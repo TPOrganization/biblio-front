@@ -11,7 +11,7 @@ export class DynamicFormQuestionComponent {
     @Input() question!: QuestionBase<string>
     @Input() form!: FormGroup
 
-    hide = true
+    hide: boolean = true
     get isValid(): boolean { return this.form.controls[this.question.key]?.valid ?? false }
 
     getErrorMessage(): string | void {
@@ -20,7 +20,7 @@ export class DynamicFormQuestionComponent {
             for (const [key, value] of Object.entries(errorsForm)) {
                 switch (key) {
                     case 'email':
-                        return 'L\'email doit contenir un @' 
+                        return 'L\'email doit contenir un @'
                     case 'minlength':
                         return `Le mot de passe doit contenir au minimun ${value['requiredLength']} caractères`
                     case 'required':
@@ -29,5 +29,4 @@ export class DynamicFormQuestionComponent {
             }
         }
     }
-
 }

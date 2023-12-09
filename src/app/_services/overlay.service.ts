@@ -10,10 +10,10 @@ export class LoadingSpinnerService {
     overlayRef: OverlayRef
 
     constructor(
-        public overlay: Overlay
+        private readonly _overlay: Overlay
     ) {
-        this.overlayRef = this.overlay.create({
-            positionStrategy: this.overlay
+        this.overlayRef = this._overlay.create({
+            positionStrategy: this._overlay
                 .position()
                 .global()
                 .centerHorizontally()

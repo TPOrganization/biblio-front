@@ -8,15 +8,14 @@ import { SnackbarItem, SnackbarService } from '../../_services/snackbar.service'
 })
 export class SnackBarComponent implements OnInit {
     messages: SnackbarItem[] = []
-
     private _duration = 3000
 
     constructor(
-        private readonly snackbarService: SnackbarService,
-    ){}
+        private readonly _snackbarService: SnackbarService,
+    ) { }
 
     ngOnInit(): void {
-        this.snackbarService.getSnackbarMessages().subscribe((snackbarItem: SnackbarItem) => {
+        this._snackbarService.getSnackbarMessages().subscribe((snackbarItem: SnackbarItem) => {
             this.messages.push(snackbarItem)
             setTimeout(() => {
                 const indexOf = this.messages.findIndex(e => e === snackbarItem)
@@ -24,7 +23,5 @@ export class SnackBarComponent implements OnInit {
             }, this._duration)
         })
     }
-
-
 }
 

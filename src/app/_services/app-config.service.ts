@@ -6,18 +6,18 @@ import { lastValueFrom } from 'rxjs'
     providedIn: 'root'
 })
 export class AppConfigService {
-    private appConfig: any = {}
+    private _appConfig: any = {}
 
-    constructor(private injector: Injector) { }
+    constructor(
+        private readonly _injector: Injector
+    ) { }
 
     async loadAppConfig() {
-        const http = this.injector.get(HttpClient)
+        const http = this._injector.get(HttpClient)
         const json = http.get('/env.json')
         const data = await lastValueFrom(json)
-        this.appConfig = data
+        this._appConfig = data
     }
 
-    get config() {
-        return this.appConfig
-    }
+    get config() { return this._appConfig }
 }

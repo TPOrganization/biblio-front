@@ -26,10 +26,10 @@ export class BookService extends ApiModelService<Book, ApiBook> {
     override entity = Book
 
     constructor(
-        private readonly appConfigService: AppConfigService
+        private readonly _appConfigService: AppConfigService
     ) {
         super()
-        this.path = appConfigService.config.API_PATH.BOOK
+        this.path = this._appConfigService.config.API_PATH.BOOK
     }
 
     async getDataForChips(): Promise<{ typesOfBooks: TypesOfBooks[], status: Status[], author: Author[] }> {

@@ -14,8 +14,6 @@ export class ApiModelService<T, ApiT> {
     loadingSpinnerService = inject(LoadingSpinnerService)
     entity: any
 
-    constructor() { }
-
     async create(entity: ApiT): Promise<T | AxiosError> {
         return await this.loadingSpinnerService.attachCallbackInOverlay(async () => {
             const data: ApiT | AxiosError = await this.axios.post({ path: `${this.path}`, params: entity as any })

@@ -22,26 +22,26 @@ export interface PostOptions {
     providedIn: 'root',
 })
 export class AxiosClientService {
-    private userKey = 'appCurentUser'
-    private tokenKey = 'appToken'
-    private axiosClient: AxiosInstance
-    private baseUrl: string
+    private _userKey = 'appCurentUser'
+    private _tokenKey = 'appToken'
+    private _axiosClient: AxiosInstance
+    private _baseUrl: string
 
     constructor(
-        private readonly appConfig: AppConfigService,
-        private readonly router: Router,
-        private readonly snackbar: SnackbarService,
+        private readonly _appConfig: AppConfigService,
+        private readonly _router: Router,
+        private readonly _snackbar: SnackbarService,
     ) {
-        this.axiosClient = axios.create({
-            timeout: this.appConfig.config.API_TIMEOUT,
+        this._axiosClient = axios.create({
+            timeout: this._appConfig.config.API_TIMEOUT,
             withCredentials: true
         })
-        axiosRetry(this.axiosClient, { retries: 3, retryDelay: () => { return 2000 } })
-        this.baseUrl = `${this.appConfig.config.API_URL}${this.appConfig.config.API_PREFIX}`
+        axiosRetry(this._axiosClient, { retries: 3, retryDelay: () => { return 2000 } })
+        this._baseUrl = `${this._appConfig.config.API_URL}${this._appConfig.config.API_PREFIX}`
 
-        this.axiosClient.interceptors.request.use(
+        this._axiosClient.interceptors.request.use(
             (config): any => {
-                const token = localStorage.getItem(this.tokenKey)
+                const token = localStorage.getItem(this._tokenKey)
                 if (token) {
                     config.headers.Authorization = 'Bearer ' + token
                 }
@@ -51,18 +51,18 @@ export class AxiosClientService {
                 return Promise.reject(this._handleError(error))
             })
 
-        this.axiosClient.interceptors.response.use((response: AxiosResponse) => {
+        this._axiosClient.interceptors.response.use((response: AxiosResponse) => {
             return this._handleResponse(response)
         }, (error: AxiosError) => {
             return Promise.reject(this._handleError(error))
         })
     }
 
-    protected async axiosCall<T>(method: Method, options: GetOptions | PostOptions): Promise<T> {
+    protected async _axiosCall<T>(method: Method, options: GetOptions | PostOptions): Promise<T> {
         try {
             const requestConfig: AxiosRequestConfig = {
                 method,
-                url: `${this.baseUrl}${options.path}`,
+                url: `${this._baseUrl}${options.path}`,
             }
 
             const paramsMethod = ['get']
@@ -70,49 +70,45 @@ export class AxiosClientService {
                 requestConfig.params = options.params :
                 requestConfig.data = options.params
 
-            const axiosResponse = await this.axiosClient.request<T>(requestConfig)
+            const axiosResponse = await this._axiosClient.request<T>(requestConfig)
             return axiosResponse.data
         } catch (error) {
             return Promise.reject(error)
         }
     }
 
-    public async get<T>(options: GetOptions): Promise<T> { return this.axiosCall('get', options) }
-    public async post<T>(options: PostOptions): Promise<T> { return this.axiosCall('post', options) }
-    public async patch<T>(options: PostOptions): Promise<T> { return this.axiosCall('patch', options) }
-    public async put<T>(options: PostOptions): Promise<T> { return this.axiosCall('put', options) }
-    public async delete<T>(options: GetOptions): Promise<T> { return this.axiosCall('delete', options) }
-    public getAxiosClient(): AxiosInstance { return this.axiosClient }
-    public getBaseUrl(): string { return this.baseUrl }
-
-    public getUserKey(): string { return this.userKey }
-    public getTokenKey = (): string => this.tokenKey //fait le return direct (sans les {})
-
+    public async get<T>(options: GetOptions): Promise<T> { return this._axiosCall('get', options) }
+    public async post<T>(options: PostOptions): Promise<T> { return this._axiosCall('post', options) }
+    public async patch<T>(options: PostOptions): Promise<T> { return this._axiosCall('patch', options) }
+    public async put<T>(options: PostOptions): Promise<T> { return this._axiosCall('put', options) }
+    public async delete<T>(options: GetOptions): Promise<T> { return this._axiosCall('delete', options) }
+    public getAxiosClient(): AxiosInstance { return this._axiosClient }
+    public getBaseUrl(): string { return this._baseUrl }
+    public getUserKey(): string { return this._userKey }
+    public getTokenKey = (): string => this._tokenKey //fait le return direct (sans les {})
 
     private _handleResponse = (data: AxiosResponse): AxiosResponse => {
         return data
     }
-
     private _handleError = (error: AxiosError): AxiosError => {
         const responseStatus = `${error.response?.status}`
         switch (true) {
             case responseStatus === '504':
             case error.code === 'ERR_NETWORK':
-                this.snackbar.error('Le serveur semble être injoignable, veuillez réessayer.')
+                this._snackbar.error('Le serveur semble être injoignable, veuillez réessayer.')
                 break
             case responseStatus === '500':
-                this.snackbar.error('Erreur, veuillez réessayer.')
+                this._snackbar.error('Erreur, veuillez réessayer.')
                 break
             case responseStatus === '401':
-                if (this.router.url !== '/') {
-                    this.snackbar.error('Votre session à expiré, veuillez vous reconnecter')
-                    localStorage.removeItem(this.tokenKey)
-                    localStorage.removeItem(this.userKey)
-                    this.router.navigate(['/'])
+                if (this._router.url !== '/') {
+                    this._snackbar.error('Votre session à expiré, veuillez vous reconnecter')
+                    localStorage.removeItem(this._tokenKey)
+                    localStorage.removeItem(this._userKey)
+                    this._router.navigate(['/'])
                 }
                 break
         }
-
         return error
     }
 }

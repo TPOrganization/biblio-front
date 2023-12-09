@@ -21,8 +21,6 @@ export class DynamicFormComponent implements OnChanges {
             this.getFormGroup.emit(this.form)
         }
     }
-
-
     onSubmit() {
         this.submitEvent.emit(this.form.getRawValue())
     }

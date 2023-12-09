@@ -19,10 +19,10 @@ export class AuthComponent implements OnInit {
     form: FormGroup
 
     constructor(
-        public service: AuthQuestionService,
-        private authService: AuthService,
-        private router: Router,
-        private snackbarService: SnackbarService
+        private readonly _service: AuthQuestionService,
+        private readonly _authService: AuthService,
+        private readonly _router: Router,
+        private readonly _snackbarService: SnackbarService
     ) {
     }
 
@@ -33,15 +33,15 @@ export class AuthComponent implements OnInit {
 
         switch (type) {
             case 'signUp':
-                this.questions = this.service.getSignUpQuestions()
+                this.questions = this._service.getSignUpQuestions()
                 this.title = 'Inscription'
                 break
             case 'signIn':
-                this.questions = this.service.getSignInQuestions()
+                this.questions = this._service.getSignInQuestions()
                 this.title = 'Connexion'
                 break
             case 'forgotPassword':
-                this.questions = this.service.getForgotPassword()
+                this.questions = this._service.getForgotPassword()
                 this.title = 'Mot de passe oublié'
         }
     }
@@ -49,29 +49,29 @@ export class AuthComponent implements OnInit {
     async submit(formValue: AuthForm) {
         switch (this.questionType) {
             case 'signIn':
-                const signInResult = await this.authService.signIn(formValue.email, formValue.password)
+                const signInResult = await this._authService.signIn(formValue.email, formValue.password)
                 if (signInResult instanceof AxiosError) {
-                    this.snackbarService.error('Erreur de connexion')
+                    this._snackbarService.error('Erreur de connexion')
                 } else {
-                    this.snackbarService.success('Connexion réussi !')
-                    this.router.navigate(['/dashboard'])
+                    this._snackbarService.success('Connexion réussi !')
+                    this._router.navigate(['/dashboard'])
                 }
                 break
             case 'signUp':
-                const signUpResult = await this.authService.signUp(formValue)
+                const signUpResult = await this._authService.signUp(formValue)
                 if (signUpResult instanceof AxiosError) {
-                    this.snackbarService.error(' Erreur à la création du compte')
+                    this._snackbarService.error(' Erreur à la création du compte')
                 } else {
-                    this.snackbarService.success('Compte créé, veuillez vous connecter !')
-                    this.authService.logOut()
+                    this._snackbarService.success('Compte créé, veuillez vous connecter !')
+                    this._authService.logOut()
                     this.switchQuestions('signIn')
                 }
                 break
             case 'forgotPassword':
-                const forgotPasswordResult = await this.authService.forgotPassword(formValue.email)
+                const forgotPasswordResult = await this._authService.forgotPassword(formValue.email)
                 forgotPasswordResult instanceof AxiosError ?
-                    this.snackbarService.error('Erreur à l\'envoi de mail') :
-                    this.snackbarService.success('Mail envoyé !')
+                    this._snackbarService.error('Erreur à l\'envoi de mail') :
+                    this._snackbarService.success('Mail envoyé !')
                 break
         }
     }

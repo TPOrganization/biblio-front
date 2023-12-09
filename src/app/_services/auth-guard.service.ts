@@ -10,15 +10,15 @@ import { Observable, map } from 'rxjs'
 
 export class AuthGuardService {
     constructor(
-        private authService: AuthService,
+        private readonly _authService: AuthService,
     ) { }
 
     canActivate(): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
         try {
-            return this.authService.isAuth().pipe(
+            return this._authService.isAuth().pipe(
                 map(isLoggedIn => {
                     if (isLoggedIn === false) {
-                        this.authService.logOut()
+                        this._authService.logOut()
                         return false
                     }
                     return !!isLoggedIn
