@@ -21,33 +21,31 @@ import { TypesOfBooks } from 'src/app/_models/_services/_api/_database/typesOfBo
 })
 export class BookInfosComponent implements OnInit {
     @Input() title: string
-
+    @Input() id !: number
 
     questions: QuestionBase<any>[]
     questionType: 'book-infos' | 'form-update' = 'book-infos'
 
-    bookSelectedInfos: BookFormData
+    bookSelectedInfos: BookFormData | null = null
     bookSelectedAuthorOfBook: Author | undefined
     bookSelectedStatus: Status | undefined
     bookSelectedTypesOfBookLabel: TypesOfBooks[]
 
     btnTxt: string
-    isMobile: boolean = false
+    isMobile: boolean = isMobileDevice()
     isUpdate: boolean = false
+    form: FormGroup | null
 
     private _typesOfBooks: TypesOfBooks[] = []
     private _status: Status[] = []
     private _authors: Author[] = []
-    form: FormGroup
-
-    @Input() id !: number
 
     constructor(
-        private router: Router,
-        private bookInfosQuestionService: BookInfosQuestionService,
-        private bookService: BookService,
-        public dialog: MatDialog,
-        public snackbarService: SnackbarService
+        private readonly _bookService: BookService,
+        private readonly _bookInfosQuestionService: BookInfosQuestionService,
+        private readonly _router: Router,
+        private readonly _dialog: MatDialog,
+        private readonly _snackbarService: SnackbarService
     ) { }
 
     async ngOnInit(): Promise<void> {
@@ -56,7 +54,7 @@ export class BookInfosComponent implements OnInit {
         await this._fetchData()
 
         const bookSelected = this.isUpdate ?
-            await this.bookService.findOne(this.id) :
+            await this._bookService.findOne(this.id) :
             new Book(null)
 
         this.questionType = this.isUpdate ? 'book-infos' : 'form-update'
@@ -70,7 +68,7 @@ export class BookInfosComponent implements OnInit {
             this.bookSelectedStatus = this._status.find(e => e.id === bookSelected.statusId)
             this.bookSelectedTypesOfBookLabel = bookSelected.typesOfBooks
         } else {
-            this.snackbarService.error('Erreur lors de la récupération du livre')
+            this._snackbarService.error('Erreur lors de la récupération du livre')
         }
 
         this._fetchQuestions()
@@ -78,14 +76,15 @@ export class BookInfosComponent implements OnInit {
     }
 
     @HostListener('window:resize')
-    onResize() {
-        this.isMobile = isMobileDevice()
-    }
-
+    onResize() { this.isMobile = isMobileDevice() }
+    getFormGroup = (form: FormGroup) => this.form = form
     switchQuestions(type: 'book-infos' | 'form-update') {
         this.questionType = type
         switch (type) {
             case 'book-infos':
+                if (!this.isUpdate) {
+                    this._router.navigate(['/dashboard'])
+                }
                 break
             case 'form-update':
                 if (this.isUpdate) {
@@ -95,7 +94,7 @@ export class BookInfosComponent implements OnInit {
                     this.title = 'Ajouter un livre'
                     this.btnTxt = 'Ajouter'
                 }
-                this.questions = this.bookInfosQuestionService.getBookQuestion(
+                this.questions = this._bookInfosQuestionService.getBookQuestion(
                     this._typesOfBooks,
                     this._status,
                     this._authors
@@ -105,14 +104,13 @@ export class BookInfosComponent implements OnInit {
     }
 
     openDialog(): void {
-        this.dialog.open(MatDialogComponent, {
+        this._dialog.open(MatDialogComponent, {
             width: '250px',
             height: '250px',
-            data: this.bookSelectedInfos.id
+            data: this.bookSelectedInfos?.id
         })
     }
 
-    getFormGroup = (form: FormGroup) => this.form = form
 
     async submit(form: BookFormData) {
         const newApiBook: ApiBook = {
@@ -122,21 +120,22 @@ export class BookInfosComponent implements OnInit {
             })
         }
         const newBook = new Book(newApiBook)
+        newBook.id === this.bookSelectedInfos?.id ?? 0
         const updateBookResult = this.isUpdate ?
-            await this.bookService.update(this.bookSelectedInfos.id, newBook.getApiData()) :
-            await this.bookService.create(newBook.getApiData())
+            await this._bookService.update(newBook.id, newBook.getApiData()) :
+            await this._bookService.create(newBook.getApiData())
         if (updateBookResult instanceof AxiosError) {
-            this.snackbarService.error('Erreur à la modification du livre')
+            this._snackbarService.error('Erreur à la modification du livre')
         } else {
-            this.snackbarService.success(
+            this._snackbarService.success(
                 this.isUpdate ? 'Livre modifié !' : 'Livre ajouté !'
             )
-            this.router.navigate(['/dashboard'])
+            this._router.navigate(['/dashboard'])
         }
     }
 
     private async _fetchData() {
-        const { typesOfBooks, status, author } = await this.bookService.getDataForChips()
+        const { typesOfBooks, status, author } = await this._bookService.getDataForChips()
         this._typesOfBooks = typesOfBooks
         this._status = status
         this._authors = author
@@ -144,14 +143,10 @@ export class BookInfosComponent implements OnInit {
     }
 
     private _fetchQuestions() {
-        this.questions = this.bookInfosQuestionService.getBookQuestion(
+        this.questions = this._bookInfosQuestionService.getBookQuestion(
             this._typesOfBooks,
             this._status,
             this._authors
         )
-    }
-
-    retourTo() {
-        this.router.navigate(['/dashboard'])
     }
 }
