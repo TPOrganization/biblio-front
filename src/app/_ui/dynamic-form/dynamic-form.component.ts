@@ -41,14 +41,12 @@ export class DynamicFormComponent implements OnChanges {
         return new FormGroup(group)
     }
 
-    private _isEnterKeyUp: boolean = false
     @ViewChild('reactivForm') reactivForm: ElementRef
     @HostListener('document:keydown', ['$event'])
     private _handleKeyboardEvent(event: KeyboardEvent) {
         const target = event.target as HTMLInputElement
         switch (event.key) {
             case 'Enter':
-                this._isEnterKeyUp = true
                 const control = this.reactivForm.nativeElement.querySelector(`[id="${target?.id}"]`)
                 if (
                     this.form.valid &&
@@ -57,9 +55,6 @@ export class DynamicFormComponent implements OnChanges {
                 ) {
                     this.onSubmit()
                 }
-                break
-            default:
-                this._isEnterKeyUp = false
                 break
         }
     }
