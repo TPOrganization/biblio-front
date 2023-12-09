@@ -27,7 +27,7 @@
                 </ng-container>
                 <ng-container *ngSwitchCase="'form'">
                     <app-dynamic-form class="dark-theme w-100" [questions]="questions" [initialData]="userLogIn"
-                        (getFormGroup)="getFormGroup($event)"></app-dynamic-form>
+                        (getFormGroup)="getFormGroup($event)" (submitEvent)="submit($event)"></app-dynamic-form>
                     <div class="row d-flex align-items-center justify-content-evenly">
                         <button mat-raised-button color="accent" class="w-25" (click)="submit(this.form?.value)"
                             [disabled]="!this.form?.valid">

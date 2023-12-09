@@ -69,6 +69,8 @@ export class BookInfosComponent implements OnInit {
             this.bookSelectedAuthorOfBook = this._authors.find(e => e.id === bookSelected.authorId)
             this.bookSelectedStatus = this._status.find(e => e.id === bookSelected.statusId)
             this.bookSelectedTypesOfBookLabel = bookSelected.typesOfBooks
+        } else {
+            this.snackbarService.error('Erreur lors de la récupération du livre')
         }
 
         this._fetchQuestions()

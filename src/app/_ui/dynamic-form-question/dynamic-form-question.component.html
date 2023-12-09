@@ -9,7 +9,8 @@
         <ng-container *ngSwitchCase="'password'">
             <mat-form-field appearance="outline" class="w-100">
                 <mat-label> Mot de passe </mat-label>
-                <input [formControlName]="question.key" matInput [type]="hide ? 'password' : 'text'">
+                <input [formControlName]="question.key" [id]="question.key" matInput
+                    [type]="hide ? 'password' : 'text'">
                 <button mat-icon-button matSuffix (click)="hide = !hide">
                     <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                 </button>
@@ -17,21 +18,22 @@
         </ng-container>
         <ng-container *ngSwitchCase="'chipsMultiple'">
             <mat-label>{{question.label}}</mat-label>
-            <mat-chip-listbox [formControlName]="question.key" selectable multiple class="pb-4">
+            <mat-chip-listbox [formControlName]="question.key" [id]="question.key" selectable multiple class="pb-4">
                 <mat-chip-option *ngFor="let opt of question.options" [value]="opt.key"
                     color="primary">{{opt.value}}</mat-chip-option>
             </mat-chip-listbox>
         </ng-container>
         <ng-container *ngSwitchCase="'chipsNoMultiple'">
             <mat-label>{{question.label}}</mat-label>
-            <mat-chip-listbox [formControlName]="question.key" class="pb-4">
+            <mat-chip-listbox [formControlName]="question.key" [id]="question.key" class="pb-4">
                 <mat-chip-option *ngFor="let opt of question.options" [value]="opt.key"
                     color="primary">{{opt.value}}</mat-chip-option>
             </mat-chip-listbox>
         </ng-container>
         <ng-container *ngSwitchCase="'textarea'">
             <mat-form-field appearance="outline" class="w-100">
-                <textarea matInput [formControlName]="question.key" placeholder="Commentaire" class="textareaHeight"></textarea>
+                <textarea matInput [formControlName]="question.key" [id]="question.key" placeholder="Commentaire"
+                    class="textareaHeight"></textarea>
             </mat-form-field>
         </ng-container>
         <ng-container *ngSwitchCase="'datepicker'">

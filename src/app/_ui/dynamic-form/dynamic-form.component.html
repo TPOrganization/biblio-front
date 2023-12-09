@@ -1,5 +1,5 @@
 <div>
-  <form (ngSubmit)="onSubmit()" [formGroup]="form">
+  <form #reactivForm (ngSubmit)="onSubmit()" [formGroup]="form">
     <div *ngFor="let question of questions" class="form-row">
       <app-dynamic-form-question class="dark-theme" [question]="question" [form]="form"></app-dynamic-form-question>
     </div>

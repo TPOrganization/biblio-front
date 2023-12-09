@@ -26,9 +26,10 @@
                 <ng-container *ngSwitchCase="'form-update'">
                     <div class="pt-3 w-100">
                         <app-dynamic-form class="dark-theme" [questions]="questions" [initialData]="bookSelectedInfos"
-                            (getFormGroup)="getFormGroup($event)"></app-dynamic-form>
+                            (getFormGroup)="getFormGroup($event)" (submitEvent)="submit($event)"></app-dynamic-form>
                         <div class="row d-flex align-items-center justify-content-evenly p-5">
-                            <button mat-raised-button color="accent" class="w-25" (click)="submit(this.form?.value)" [disabled]="!form?.valid">
+                            <button mat-raised-button color="accent" class="w-25" (click)="submit(this.form?.value)"
+                                [disabled]="!form?.valid">
                                 {{btnTxt}} </button>
                             <button mat-raised-button color="accent" class="w-25"
                                 (click)="switchQuestions('book-infos')">

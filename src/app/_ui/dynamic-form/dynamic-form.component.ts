@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core'
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, HostListener, ViewChild, ElementRef } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { QuestionBase } from 'src/app/_models/_ui/dynamic-form-question/question-base'
 
@@ -41,4 +41,26 @@ export class DynamicFormComponent implements OnChanges {
         return new FormGroup(group)
     }
 
+    private _isEnterKeyUp: boolean = false
+    @ViewChild('reactivForm') reactivForm: ElementRef
+    @HostListener('document:keydown', ['$event'])
+    private _handleKeyboardEvent(event: KeyboardEvent) {
+        const target = event.target as HTMLInputElement
+        switch (event.key) {
+            case 'Enter':
+                this._isEnterKeyUp = true
+                const control = this.reactivForm.nativeElement.querySelector(`[id="${target?.id}"]`)
+                if (
+                    this.form.valid &&
+                    target?.type !== 'textarea' &&
+                    control
+                ) {
+                    this.onSubmit()
+                }
+                break
+            default:
+                this._isEnterKeyUp = false
+                break
+        }
+    }
 }

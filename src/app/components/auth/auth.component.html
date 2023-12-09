@@ -7,8 +7,8 @@
                     <mat-card class="background-white w-75 align-items-center">
                         <mat-card-content>
                             <h2 class="color-main-dark_500 p-4"><b>{{title}}</b></h2>
-                            <app-dynamic-form [questions]="questions"
-                                (getFormGroup)="getFormGroup($event)"></app-dynamic-form>
+                            <app-dynamic-form [questions]="questions" (getFormGroup)="getFormGroup($event)"
+                                (submitEvent)="submit($event)"></app-dynamic-form>
                             <ng-container [ngSwitch]="questionType">
                                 <ng-container *ngSwitchCase="'signIn'">
                                     <button class="btn-auth w-100 pb-3" (click)="switchQuestions('forgotPassword')"> Mot
