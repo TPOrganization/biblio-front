@@ -42,7 +42,7 @@ export class AuthService {
         this._path = appConfigService.config.API_PATH.AUTH
     }
 
-    getCurrentUserLabel = ():string => `${this.userLogIn.firstName} ${this.userLogIn.lastName}`
+    getCurrentUserLabel = (): string => `${this.userLogIn.firstName} ${this.userLogIn.lastName}`
 
     async signIn(username: string, password: string): Promise<AuthReponse | AxiosError> {
         try {
@@ -62,18 +62,14 @@ export class AuthService {
     }
 
     private setUserLogin(user: ApiUser) {
-        console.log('setUserLogin =>', user)
         const localStorageUser = localStorage.getItem(this.userToken)
-        console.log('setUserLogin  localStorageUser =>', localStorageUser)
         this.userLogIn = new User(localStorageUser ? JSON.parse(localStorageUser) : user)
-        console.log('setUserLogin  userLogIn =>', this.userLogIn)
     }
 
     isAuth(): Observable<AuthReponse | false> {
         const observable = from(this.axios.get({ path: `${this._path}/user` })) as Observable<AuthReponse>
         return observable.pipe(
             map(data => {
-                console.log('data =>', data)
                 if (data) {
                     this.setUserLogin(data as any)
                     this.isAuthenticated = true

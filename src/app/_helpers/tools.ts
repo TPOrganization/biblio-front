@@ -12,3 +12,13 @@ export const formatNumberValue = (value: string | number): string => {
     return beforeDecimal.replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + (splittedValue.length > 0 ? `,${splittedValue.join('')}` : '')
 }
 export const firstLetterUpperCase = (str: string): string => `${str.slice(0, 1).toUpperCase()}${str.slice(1)}`
+
+export const isMobileDevice = (): boolean => {
+    const regexs = [/(Android)(.+)(Mobile)/i, /BlackBerry/i, /iPhone|iPod/i, /Opera Mini/i, /IEMobile/i]
+    return regexs.some((b) => navigator.userAgent.match(b)) || window.screen.width <= 991
+}
+
+export const isTabletDevice = (): boolean => {
+    const regex = /(ipad|tablet|(android(?!.*mobile))|(windows(?!.*phone)(.*touch))|kindle|playbook|silk|(puffin(?!.*(IP|AP|WP))))/
+    return regex.test(navigator.userAgent.toLowerCase())
+}

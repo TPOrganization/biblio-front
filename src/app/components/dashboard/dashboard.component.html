@@ -1,7 +1,7 @@
-<div id="dashboard" class="h-100 overflow-auto">
-    <div class="row m-0 h-100">
-        <div class="custom-border-radius-mat-card col-sm-12 col-lg-8 offset-lg-2 box-shadow overflow-auto margin">
-            <div class="img-background row h-100 d-flex flex-column">
+<div id="dashboard" class="container-fluid h-100 ">
+    <div class="row h-100 overflow-auto">
+        <div class="col-lg-8 offset-lg-2 box-shadow m-auto">
+            <div class="img-background rounded row d-flex flex-column">
                 <!-- Afficher sur du XL -->
                 <div class="d-none d-xl-block pt-5 p-4 flex-1">
                     <div class="row d-flex align-items-center p-3">
@@ -32,31 +32,35 @@
                         </div>
                     </div>
                 </div>
-                <div class="background-opacity border-radius col-12 pt-4 ps-4 flex-1">
+                <div class="background-opacity border-radius col-12 p-4 flex-1">
                     <p class="color-main-dark_500 m-0"> <b> VOS LECTURES EN COURS </b></p>
                     <hr class="w-50 mt-1 mb-2" />
-                    <div class="w-100 d-flex flex-wrap">
-                        <div *ngIf="!booksCurrentReading.length else currentReadingTemplate">
-                            <div class="m-5 d-flex flex-column align-items-center"> Aucunes lectures en cours <img
-                                    src="../../../assets/images/undraw_book_lover_re_rwjy.svg" height="200"
-                                    width="200px" /> </div>
+                    <div class="w-100">
+                        <div class="d-flex flex-wrap justify-content-center">
+                            <div *ngIf="!booksCurrentReading.length else currentReadingTemplate">
+                                <div class="m-5 d-flex flex-column align-items-center"> Aucunes lectures en cours <img
+                                        src="../../../assets/images/undraw_book_lover_re_rwjy.svg" height="200">
+                                </div>
+                            </div>
                         </div>
                         <ng-template #currentReadingTemplate>
                             <div *ngFor="let book of booksCurrentReading">
-                                <div class="shapeOfCover m-4 p-0" (click)="goToBookInfos(book.id)"> {{book.title}} </div>
+                                <div class="shapeOfCover m-4 p-0" (click)="bookInfos(book.id)">
+                                    {{book.title}}
+                                </div>
                             </div>
                         </ng-template>
                     </div>
                 </div>
-                <div class="background-white border-radius shadow col-12 pt-4 ps-4 flex-2">
+                <div class="background-white border-radius shadow col-12 p-4 flex-2">
                     <div class="d-flex align-items-center position-relative m-0 pb-1">
                         <p class="color-main-dark_500 m-0"> <b> VOTRE BIBLIOTHEQUE </b> </p>
                         <div class="d-none d-xl-block flex-1 position-absolute end-0 pe-5">
-                            <button mat-raised-button color="accent" (click)="goTobook()"> + Ajouter un livre
+                            <button mat-raised-button color="accent" (click)="createBook()"> + Ajouter un livre
                             </button>
                         </div>
                         <div class="d-block d-xl-none flex-1  position-absolute end-0">
-                            <button mat-mini-fab matTooltip="Primary" color="accent" (click)="goTobook()">
+                            <button mat-mini-fab matTooltip="Primary" color="accent" (click)="createBook()">
                                 <mat-icon>add</mat-icon>
                             </button>
                         </div>
@@ -64,17 +68,23 @@
                     <hr class="w-50 mt-1 mb-2" />
                     <div class="chips row pt-4 pb-3">
                         <mat-chip-listbox aria-label="genre-selection">
-                            <mat-chip *ngFor="let type of typesOfBooks" class="box-shadow-chip"> {{type}}</mat-chip>
+                            <mat-chip *ngFor="let type of typesOfBooks" class="box-shadow-chip">
+                                {{type}}</mat-chip>
                         </mat-chip-listbox>
-                        <div class="w-100 d-flex flex-wrap">
-                            <div *ngIf="!booksOfUser.length else bookshelfTemplate">
-                                <div class="m-4 p-0 d-flex flex-column align-items-center"> Aucuns livres dans la
-                                    Bibliothèque <img src="../../../assets/images/undraw_bibliophile_re_xarc.svg"
-                                        height="200" width="200px" /> </div>
+                        <div class="w-100">
+                            <div class="d-flex flex-wrap justify-content-center">
+                                <div *ngIf="!booksOfUser.length else bookshelfTemplate">
+                                    <div class="m-4 p-0 d-flex flex-column align-items-center"> Aucuns livres dans
+                                        la
+                                        Bibliothèque <img src="../../../assets/images/undraw_bibliophile_re_xarc.svg"
+                                            height="200" width="200px" /> </div>
+                                </div>
                             </div>
                             <ng-template #bookshelfTemplate>
                                 <div *ngFor="let book of booksOfUser">
-                                    <div class="shapeOfCover m-4 p-0" (click)="goToBookInfos(book.id)"> {{book.title}} </div>
+                                    <div class="shapeOfCover m-4 p-0" (click)="bookInfos(book.id)">
+                                        {{book.title}}
+                                    </div>
                                 </div>
                             </ng-template>
                         </div>
@@ -99,12 +109,4 @@
 
 <ng-template #headerIconsTemplate>
     <mat-icon class="profil-icon" color="primary" (click)="goToUserProfil()"> account_circle </mat-icon>
-    <mat-icon class="color-main-dark_500" (click)="logOut()">exit_to_app</mat-icon>
 </ng-template>
-
-<!-- <ng-template #iconAddBookDesktop>
-
-</ng-template>
-<ng-template #iconAddBookMobile>
-
-</ng-template> -->

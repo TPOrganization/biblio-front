@@ -4,6 +4,7 @@ import { AppConfigService } from '../app-config.service'
 import { SnackbarService } from '../snackbar.service'
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse, Method } from 'axios'
 import axiosRetry from 'axios-retry'
+import { LoadingSpinnerService } from '../overlay.service'
 
 export interface Params {
     [key: string]: any
@@ -31,6 +32,7 @@ export class AxiosClientService {
         private readonly appConfig: AppConfigService,
         private readonly router: Router,
         private readonly snackbar: SnackbarService,
+        public loadingSpinnerService: LoadingSpinnerService
     ) {
         this.axiosClient = axios.create({
             timeout: this.appConfig.config.API_TIMEOUT,
@@ -88,6 +90,7 @@ export class AxiosClientService {
     public getUserKey(): string { return this.userKey }
     public getTokenKey = (): string => this.tokenKey //fait le return direct (sans les {})
 
+
     private _handleResponse = (data: AxiosResponse): AxiosResponse => {
         return data
     }
@@ -98,10 +101,16 @@ export class AxiosClientService {
             case responseStatus === '504':
             case error.code === 'ERR_NETWORK':
                 this.snackbar.error('Le serveur semble être injoignable, veuillez réessayer.')
+                this.loadingSpinnerService.detachOverlay()
+                break
+            case responseStatus === '500':
+                this.snackbar.error('Erreur, veuillez réessayer.')
+                this.loadingSpinnerService.detachOverlay()
                 break
             case responseStatus === '401':
                 if (this.router.url !== '/') {
-                    this.snackbar.error('Votre session a expiré, veuillez vous reconnecter')
+                    this.snackbar.error('Votre session à expiré, veuillez vous reconnecter')
+                    this.loadingSpinnerService.detachOverlay()
                     localStorage.removeItem(this.tokenKey)
                     localStorage.removeItem(this.userKey)
                     this.router.navigate(['/'])

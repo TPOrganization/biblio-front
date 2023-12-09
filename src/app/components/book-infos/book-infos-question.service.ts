@@ -1,25 +1,23 @@
 import { Injectable } from '@angular/core'
-import { Validators } from '@angular/forms'
 import { QuestionBase } from '../../_models/_ui/dynamic-form-question/question-base'
 import { TextboxQuestion } from '../../_models/_ui/dynamic-form-question/question-textbox'
 import { ChipsNoMultipleQuestion } from 'src/app/_models/_ui/dynamic-form-question/question-chips-no-multiple'
 import { TextareaQuestion } from 'src/app/_models/_ui/dynamic-form-question/question-textarea'
 import { DatepickerQuestion } from 'src/app/_models/_ui/dynamic-form-question/question-datepicker'
 import { ChipsMultipleQuestion } from 'src/app/_models/_ui/dynamic-form-question/question-chips-multiple'
-import { Type } from 'src/app/_models/_services/_api/_database/type/type.models'
+import { TypesOfBooks } from 'src/app/_models/_services/_api/_database/typesOfBooks/typesOfBooks.models'
 import { Status } from 'src/app/_models/_services/_api/_database/status/status.models'
 import { Author } from 'src/app/_models/_services/_api/_database/author/author.models'
 
 @Injectable({
     providedIn: 'root'
 })
-export class BookQuestionService {
+export class BookInfosQuestionService {
 
-    getAddBookQuestion(
-      types: Type[],
-      status: Status[],
-      author: Author[]
-      
+    getBookQuestion(
+        typesOfBook: TypesOfBooks[],
+        status: Status[],
+        author: Author[]     
     ) {
         const questions: QuestionBase<string>[] = [
 
@@ -32,28 +30,28 @@ export class BookQuestionService {
             }),
 
             new ChipsNoMultipleQuestion({
-              key: 'author_id',
-              label: 'Auteur',
-              options: author.map(e => {
-                return {
-                  key: e.id, value: e.name
-                }
-              }),
-              order: 2
+                key: 'authorId',
+                label: 'Auteur',
+                options: author.map(e => {
+                    return {
+                        key: e.id, value: e.name
+                    }
+                }),
+                order: 2
             }),
 
             new ChipsMultipleQuestion({
-                key: 'type',
+                key: 'typesOfBooks',
                 label: 'Genre littéraire',
-                options: types.map(e => {
-                  return {
-                    key: e.id, value: e.label
-                  }
+                options: typesOfBook.map(e => {
+                    return {
+                        key: e.id, value: e.label
+                    }
                 }),
                 order: 3
-              }),
+            }),
               
-              new TextareaQuestion ({
+            new TextareaQuestion ({
                 key: 'comment',
                 label: 'Commentaire',
                 value: '',
@@ -61,30 +59,30 @@ export class BookQuestionService {
                 order: 4
             }),
 
-              new ChipsNoMultipleQuestion({
+            new ChipsNoMultipleQuestion({
                 key: 'statusId',
                 label: 'Statut',
                 options: status.map(e => {
-                  return {
-                    key: e.id, value: e.label
-                  }
+                    return {
+                        key: e.id, value: e.label
+                    }
                 }),
                 order: 5
-              }),
+            }),
 
-              new DatepickerQuestion({
+            new DatepickerQuestion({
                 key: 'startDate',
-                label: "Date de début",
+                label: 'Date de début',
                 type: 'datepicker',
                 order: 6
-              }),
+            }),
               
-              new DatepickerQuestion({
+            new DatepickerQuestion({
                 key: 'endDate',
-                label: "Date de fin",
+                label: 'Date de fin',
                 type: 'datepicker',
                 order: 7
-              })
+            })
         ]
 
         return questions.sort((a, b) => a.order - b.order)

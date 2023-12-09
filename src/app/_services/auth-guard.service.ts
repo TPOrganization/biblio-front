@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import {Router, UrlTree } from '@angular/router'
+import { UrlTree } from '@angular/router'
 import { AuthService } from './_api/auth/auth.service'
 import { Observable, map } from 'rxjs'
 

@@ -1,9 +1,8 @@
-import { Component, OnInit, Output } from '@angular/core'
+import { Component, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
 import { AxiosError } from 'axios'
+import { isMobileDevice } from 'src/app/_helpers/tools'
 import { Book } from 'src/app/_models/_services/_api/_database/book/book.models'
-import { Type } from 'src/app/_models/_services/_api/_database/type/type.models'
-import { User } from 'src/app/_models/_services/_api/_database/user/user.models'
 import { BookService } from 'src/app/_services/_api/_database/book/book.service'
 import { AuthService } from 'src/app/_services/_api/auth/auth.service'
 
@@ -15,6 +14,7 @@ import { AuthService } from 'src/app/_services/_api/auth/auth.service'
 })
 export class DashboardComponent implements OnInit {
 
+    isMobile: boolean = false
     typesOfBooks: string[] = []
     booksOfUser: Book[] = []
     booksCurrentReading: Book[] = []
@@ -29,8 +29,9 @@ export class DashboardComponent implements OnInit {
 
     async ngOnInit(): Promise<void> {
 
-        const { types } = (await this.bookService.getDataForChips())
-        this.typesOfBooks = types.map((e) => e.label)
+        this.isMobile = isMobileDevice()
+        const { typesOfBooks } = (await this.bookService.getDataForChips())
+        this.typesOfBooks = typesOfBooks.map((e) => e.label)
 
         const booksOfUser = await this.bookService.find()
         if (!(booksOfUser instanceof AxiosError)) {
@@ -39,23 +40,18 @@ export class DashboardComponent implements OnInit {
         }
     }
 
-
-    logOut() {
-        this.authService.logOut()
-    }
-
     goToUserProfil() {
         this.router.navigate(['/user'])
     }
 
-    goTobook() {
-        this.router.navigate(['/book'])
+    createBook() {
+        this.router.navigate([`/book-infos`])
     }
 
-    goToBookInfos(bookId: number) {
-        this.router.navigate([`/book-infos/${bookId}`, { test: 'test' }])
-        //envoyer les informations du book sur lequel on vient de cliquer ?
-
+    bookInfos(id: number) {
+        this.router.navigate([`/book-infos/${id}`])
     }
+
+
 
 }

@@ -4,7 +4,6 @@ import { AuthQuestionService } from './auth-question.service'
 import { FormGroup } from '@angular/forms'
 import { AuthForm, AuthService } from 'src/app/_services/_api/auth/auth.service'
 import { SnackbarService } from 'src/app/_services/snackbar.service'
-import { User } from 'src/app/_models/_services/_api/_database/user/user.models'
 import { AxiosError } from 'axios'
 import { Router } from '@angular/router'
 
@@ -70,7 +69,7 @@ export class AuthComponent implements OnInit {
                 } else {
                     this.snackbarService.success('Compte créé, veuillez vous connecter !')
                     this.authService.logOut()
-                    this.switchQuestions("signIn")
+                    this.switchQuestions('signIn')
                 }
                 break
             case 'forgotPassword':

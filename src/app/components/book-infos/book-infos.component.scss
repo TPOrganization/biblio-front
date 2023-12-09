@@ -1,0 +1,38 @@
+.img-book{
+    width: 250px;
+    height: 350px
+}
+
+.backgroud-color {
+    background-color: #ffebd9;
+}
+
+.vertical-line {
+    border-left: 1px solid #000000;
+    height: 20px;
+    margin: 0 20px;
+}
+
+.style-status {
+    &_1 {
+        background-color: #ff8b85;
+    }
+    &_2 {
+        background-color: #8dd6ff;
+    }
+    &_3 {
+        background-color: #afcba5;
+    }
+    &_4 {
+        background-color: #db82dd;
+    }
+}
+
+.style-label {
+    background-color: #FFBD81;
+}
+
+.comment-container{
+    width: 241px;
+    
+}

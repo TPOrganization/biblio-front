@@ -1,8 +1,35 @@
-<mat-card class="background-white align-items-center">
-    <mat-card-content>
-        <h2 class="color-main-dark_500 p-4"><b>{{title}}</b></h2>
-        <app-dynamic-form [questions]="questions" (submitEvent)="submitEvent.emit($event)"
-            (getFormGroup)="getFormGroup.emit($event)"></app-dynamic-form>
-        <ng-content></ng-content>
-    </mat-card-content>
-</mat-card>
+<div id="mat-card" class="row h-100 overflow-auto">
+    <div class="col-xl-10 col-xs-12 m-auto background-color m-auto p-0">
+        <div class="m-auto col-xs-8 col-xl-10" [ngClass]="isMobile ? 'p-0' : 'p-5'">
+            <mat-card>
+                <div [ngClass]="isMobile ? '':' overflow-auto'">
+                    <div id="custom-card-header" [ngClass]="isMobile ? 'fs-4 ':'col-xl-12 p-2'">
+                        <div
+                            [ngClass]="isMobile ? 'd-flex justify-content-end mt-3 btn-shape-mobile' : 'd-flex justify-content-between align-items-center py-5 px-3'">
+                            <button mat-mini-fab [ngClass]="isMobile ? 'position-header-mobile__icon ' : ''"
+                                (click)="returnToDashboard()">
+                                <mat-icon>arrow_back</mat-icon>
+                            </button>
+                            <ng-content select="[contentBtn]"></ng-content>
+                        </div>
+                        <div class="d-flex flex-column align-items-center">
+                            <h2 [ngClass]="isMobile ? 'align-items-center position-header-mobile ':'py-3'">
+                                {{title}}
+                            </h2>
+                        </div>
+                        <div id="custom-card-content" class="d-flex align-items-center justify-content-center"
+                            [ngClass]="isMobile ? 'flex-column' : 'flex-row py-5'">
+                            <div>
+                                <ng-content select="[content1]"></ng-content>
+                            </div>
+                            <mat-divider></mat-divider>
+                            <div>
+                                <ng-content select="[content2]"></ng-content>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </mat-card>
+        </div>
+    </div>
+</div>

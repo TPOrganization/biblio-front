@@ -1,6 +1,5 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core'
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
-import { User } from 'src/app/_models/_services/_api/_database/user/user.models'
 import { QuestionBase } from 'src/app/_models/_ui/dynamic-form-question/question-base'
 
 @Component({
@@ -16,7 +15,6 @@ export class DynamicFormComponent implements OnChanges {
 
     form!: FormGroup
 
-    user: User
     ngOnChanges(changes: SimpleChanges): void {
         if (changes['questions'] || changes['initialData']) {
             this.form = this.toFormGroup()
@@ -38,7 +36,7 @@ export class DynamicFormComponent implements OnChanges {
             }
 
             const initialValue = this.initialData[question.key] ?? question.value
-            group[question.key] = new FormControl(initialValue|| '', validators)
+            group[question.key] = new FormControl(initialValue || '', validators)
         })
         return new FormGroup(group)
     }

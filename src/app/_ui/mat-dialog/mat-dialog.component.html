@@ -1,0 +1,11 @@
+<div class="ms-4 justify-content-center align-items-center">
+
+    <h1 mat-dialog-title> <mat-icon class="pt-1">warning</mat-icon> Suppression</h1>
+</div>
+<div mat-dialog-content class="justify-content-center align-items-center">
+    Voulez vous supprimer ce livre ?
+</div>
+<div mat-dialog-actions class="justify-content-center align-items-center">
+    <button mat-button mat-dialog-close  (click)="deleteBook(this.data)"> Supprimer </button>
+    <button mat-button mat-dialog-close >Annuler</button>
+</div>

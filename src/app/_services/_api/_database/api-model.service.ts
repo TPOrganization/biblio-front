@@ -1,4 +1,4 @@
-import { Inject, Injectable, inject } from '@angular/core'
+import { Injectable, inject } from '@angular/core'
 import { LoadingSpinnerService } from '../../overlay.service'
 import { AxiosClientService } from '../axios-client.service'
 import { AxiosError } from 'axios'
@@ -21,7 +21,7 @@ export class ApiModelService<T, ApiT> {
         const data: ApiT | AxiosError = await this.axios.post({ path: `${this.path}`, params: entity as any })
         this.loadingSpinnerService.detachOverlay()
         return data instanceof AxiosError ? data : new this.entity(data)
-        
+
     }
 
     async find(): Promise<T[] | AxiosError> {
@@ -35,10 +35,10 @@ export class ApiModelService<T, ApiT> {
         this.loadingSpinnerService.attachOverlay()
         const data: ApiT | AxiosError = await this.axios.get({ path: `${this.path}/${id}` })
         this.loadingSpinnerService.detachOverlay()
-        return data instanceof AxiosError ? data : this.entity(data)
+        return data instanceof AxiosError ? data : new this.entity(data)
     }
 
-    async update(id: number, entity: T | AxiosError) {
+    async update(id: number, entity: ApiT | AxiosError) {
         this.loadingSpinnerService.attachOverlay()
         const data: ApiT | AxiosError = await this.axios.patch({ path: `${this.path}/${id}`, params: entity as any })
         this.loadingSpinnerService.detachOverlay()
@@ -47,8 +47,8 @@ export class ApiModelService<T, ApiT> {
 
     async delete(id: number): Promise<boolean> {
         this.loadingSpinnerService.attachOverlay()
-        const data: ApiT | AxiosError = await this.axios.delete({ path: `${this.path}/${id}` })
+        const data: boolean = await this.axios.delete({ path: `${this.path}/${id}` })
         this.loadingSpinnerService.detachOverlay()
-        return data instanceof AxiosError ? data : this.entity(data)
+        return data 
     }
 }

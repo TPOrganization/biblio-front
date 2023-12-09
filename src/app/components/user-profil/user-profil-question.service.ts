@@ -14,7 +14,6 @@ export class UserQuestionService {
             new TextboxQuestion({
                 key: 'lastName',
                 label: 'Nom',
-                value: '',
                 required: true,
                 order: 1
             }),
@@ -22,7 +21,6 @@ export class UserQuestionService {
             new TextboxQuestion({
                 key: 'firstName',
                 label: 'Prénom',
-                value: '',
                 required: true,
                 order: 2
             }),
@@ -39,7 +37,4 @@ export class UserQuestionService {
 
         return questions.sort((a, b) => a.order - b.order)
     }
-
-    
-
 }
