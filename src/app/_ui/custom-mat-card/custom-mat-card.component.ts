@@ -3,9 +3,9 @@ import { Router } from '@angular/router'
 import { isMobileDevice } from 'src/app/_helpers/tools'
 
 @Component({
-  selector: 'app-custom-mat-card',
-  templateUrl: './custom-mat-card.component.html',
-  styleUrls: ['./custom-mat-card.component.scss']
+    selector: 'app-custom-mat-card',
+    templateUrl: './custom-mat-card.component.html',
+    styleUrls: ['./custom-mat-card.component.scss']
 })
 export class CustomMatCardComponent implements OnInit {
   @Input() title: string

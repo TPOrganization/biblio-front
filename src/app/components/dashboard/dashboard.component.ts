@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
 import { AxiosError } from 'axios'
-import { isMobileDevice } from 'src/app/_helpers/tools'
 import { Book } from 'src/app/_models/_services/_api/_database/book/book.models'
 import { TypesOfBooks } from 'src/app/_models/_services/_api/_database/typesOfBooks/typesOfBooks.models'
 import { BookService } from 'src/app/_services/_api/_database/book/book.service'
