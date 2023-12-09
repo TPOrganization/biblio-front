@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core'
-import { User } from 'src/app/_models/_services/_api/_database/user/user.models'
+import { Router } from '@angular/router'
+import { AxiosError } from 'axios'
+import { isMobileDevice } from 'src/app/_helpers/tools'
+import { Book } from 'src/app/_models/_services/_api/_database/book/book.models'
+import { BookService } from 'src/app/_services/_api/_database/book/book.service'
 import { AuthService } from 'src/app/_services/_api/auth/auth.service'
 
 
@@ -10,20 +14,44 @@ import { AuthService } from 'src/app/_services/_api/auth/auth.service'
 })
 export class DashboardComponent implements OnInit {
 
-    user : User
+    isMobile: boolean = false
+    typesOfBooks: string[] = []
+    booksOfUser: Book[] = []
+    booksCurrentReading: Book[] = []
+    currentlyStatusOfReading: number
 
     constructor(
-        private authService: AuthService
+        public authService: AuthService,
+        private router: Router,
+        private bookService: BookService,
     ) { }
 
-    ngOnInit(): void {
-        if(localStorage.getItem('appCurentUser')){
-            this.user = JSON.parse(localStorage.getItem('appCurentUser')  || '{}')
+
+    async ngOnInit(): Promise<void> {
+
+        this.isMobile = isMobileDevice()
+        const { typesOfBooks } = (await this.bookService.getDataForChips())
+        this.typesOfBooks = typesOfBooks.map((e) => e.label)
+
+        const booksOfUser = await this.bookService.find()
+        if (!(booksOfUser instanceof AxiosError)) {
+            this.booksOfUser = booksOfUser
+            this.booksCurrentReading = booksOfUser.filter(book => book.statusId === 2)
         }
     }
 
-    logOut(){
-        this.authService.logOut()
+    goToUserProfil() {
+        this.router.navigate(['/user'])
     }
+
+    createBook() {
+        this.router.navigate([`/book-infos`])
+    }
+
+    bookInfos(id: number) {
+        this.router.navigate([`/book-infos/${id}`])
+    }
+
+
 
 }

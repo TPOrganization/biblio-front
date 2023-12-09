@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core'
-import { ActivatedRouteSnapshot, Router, RouterStateSnapshot, UrlTree } from '@angular/router'
+import { UrlTree } from '@angular/router'
 import { AuthService } from './_api/auth/auth.service'
-import { Observable } from 'rxjs'
+import { Observable, map } from 'rxjs'
 
 
 @Injectable({
@@ -11,18 +11,25 @@ import { Observable } from 'rxjs'
 export class AuthGuardService {
     constructor(
         private authService: AuthService,
-        private router: Router
     ) { }
 
     canActivate(): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
-
-        const userIsAuth = localStorage.getItem('appToken') 
-        if (userIsAuth) {
-            return true
-        } else {
-            this.router.navigate(['/'])
+        try {
+            return this.authService.isAuth().pipe(
+                map(isLoggedIn => {
+                    if (isLoggedIn === false) {
+                        this.authService.logOut()
+                        return false
+                    }
+                    return !!isLoggedIn
+                })
+            )
+        } catch (error) {
             return false
         }
     }
-
 }
+
+
+
+

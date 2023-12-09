@@ -1,8 +1,8 @@
 @each $breakpoint in $breakpointsKeys {
     @include mq($breakpoint) {
         #snackbar-component {
-            top: map-get($snackbar-position-top, $breakpoint);
-            bottom: map-get($snackbar-position-bottom, $breakpoint);
+            top: map-get($custom-snackbar-position-top, $breakpoint);
+            bottom: map-get($custom-snackbar-position-bottom, $breakpoint);
         }
     }
 }

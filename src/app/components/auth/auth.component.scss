@@ -2,6 +2,14 @@
 @import "../../../assets/css/mixins/mixins";
 @import "../../../assets/css/variables/custom_variables";
 
+.margin {
+    margin: 0 50px;
+}
+
+::ng-deep .mdc-card {
+    border-radius: 30px !important;
+}
+
 .img-background {
     background-image: url("/assets/images/backgroundImgMPB.jpg");
     background-size: cover;
@@ -11,14 +19,15 @@
     margin: auto;
 }
 
-.btnPasswordForgot {
+.btn-auth{
     border: none;
-    background-color: white;
+    background-color: #ffffff00 !important;
 }
 
-.disposition {
-    display: flex;
-    justify-content: end;
-    width: 89%;
-    padding-bottom: 50px;
+::ng-deep .mat-mdc-card-content {
+    width: 80%;
+}
+
+.cursor{
+    cursor: pointer;
 }

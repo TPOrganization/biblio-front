@@ -8,7 +8,7 @@ export class QuestionBase<T> {
     order: number
     controlType: string
     type: string
-    options: { key: string, value: string }[]
+    options: { key: string | number, value: string }[]
     validators: ValidatorFn[] = []
 
     constructor(options: {
@@ -19,7 +19,7 @@ export class QuestionBase<T> {
     order?: number;
     controlType?: string;
     type?: string;
-    options?: { key: string, value: string }[];
+    options?: { key: string | number, value: string }[];
     validators?: ValidatorFn[]
   } = {}) {
         this.value = options.value

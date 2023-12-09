@@ -1,0 +1,46 @@
+<div id="user-profil" class="container-fluid h-100">
+    <app-custom-mat-card [title]="title" (btnUpdate)="switchQuestions('form')">
+        <div contentBtn>
+            <div *ngIf="!isMobile">
+                <button mat-raised-button color="accent" class="me-2"
+                    (click)="switchQuestions('form')"><mat-icon>create</mat-icon>
+                    Modifier les informations
+                </button>
+                <button mat-raised-button color="accent" class="me-2" (click)="logOut()">
+                    <mat-icon>exit_to_app</mat-icon> Deconnexion
+                </button>
+            </div>
+            <div *ngIf="isMobile">
+                <button mat-mini-fab color="accent" class="me-2"
+                    (click)="switchQuestions('form')"><mat-icon>create</mat-icon>
+                </button>
+            </div>
+        </div>
+        <div content1 class="d-flex flex-column align-items-center ms-5">
+            <ng-container [ngSwitch]="questionType">
+                <ng-container *ngSwitchCase="'user-profil'">
+                    <div class="icon-user-desktop">
+                        <mat-icon class="w-100 h-100 d-flex align-items-center justify-content-center">person</mat-icon>
+                    </div>
+                    <span class="pt-5 pb-2"> <b> {{userLogIn.lastName}} {{userLogIn.firstName}} </b></span>
+                    <span class="pb-5"> <i> {{userLogIn.email}} </i> </span>
+                </ng-container>
+                <ng-container *ngSwitchCase="'form'">
+                    <app-dynamic-form class="dark-theme w-100" [questions]="questions" [initialData]="userLogIn"
+                        (getFormGroup)="getFormGroup($event)"></app-dynamic-form>
+                    <div class="row d-flex align-items-center justify-content-evenly">
+                        <button mat-raised-button color="accent" class="w-25" (click)="submit(this.form?.value)"
+                            [disabled]="!this.form?.valid">
+                            Modifier </button>
+                        <button mat-raised-button color="accent" class="w-25" (click)="switchQuestions('user-profil')">
+                            Annuler
+                        </button>
+                    </div>
+                </ng-container>
+            </ng-container>
+        </div>
+        <div content2 class="chart-container ms-5 ps-5 " *ngIf="questionType==='user-profil'">
+            <canvas id="MyChart"> {{chart}} </canvas>
+        </div>
+    </app-custom-mat-card>
+</div>

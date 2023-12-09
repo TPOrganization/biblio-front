@@ -17,4 +17,13 @@ export class User {
         this.lastName = data.lastName ?? ''
         this.email = data.email ?? ''
     }
+
+    getApiData(): ApiUser { 
+        return {
+            id: this.id,
+            email: this.email,
+            firstName : this.firstName,
+            lastName: this.lastName
+        }
+    }
 }

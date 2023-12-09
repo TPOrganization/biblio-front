@@ -23,5 +23,5 @@ export class LoadingSpinnerService {
     }
 
     attachOverlay() { this.overlayRef.attach(new ComponentPortal(LoadingSpinnerComponent)) }
-    detachOverlay() { setTimeout(() => { this.overlayRef.detach() }, 200) }
+    detachOverlay() { setTimeout(() => { this.overlayRef.detach() }, 20) }
 }

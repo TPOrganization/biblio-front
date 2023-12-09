@@ -1,7 +1,4 @@
 @each $breakpoint in $breakpointsKeys {
     @include mq($breakpoint) {
-        .custom-mat-card {
-            width: map-get($custom-card-widths, $breakpoint);
-        }
     }
 }

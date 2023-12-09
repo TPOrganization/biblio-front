@@ -7,14 +7,48 @@
             <ng-container *ngTemplateOutlet="questionBase; context: {$implicit:question}"></ng-container>
         </ng-container>
         <ng-container *ngSwitchCase="'password'">
-            <ng-container *ngTemplateOutlet="questionBase; context: {$implicit:question}"></ng-container>
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label> Mot de passe </mat-label>
+                <input [formControlName]="question.key" matInput [type]="hide ? 'password' : 'text'">
+                <button mat-icon-button matSuffix (click)="hide = !hide">
+                    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+            </mat-form-field>
+        </ng-container>
+        <ng-container *ngSwitchCase="'chipsMultiple'">
+            <mat-label>{{question.label}}</mat-label>
+            <mat-chip-listbox [formControlName]="question.key" selectable multiple class="pb-4">
+                <mat-chip-option *ngFor="let opt of question.options" [value]="opt.key"
+                    color="primary">{{opt.value}}</mat-chip-option>
+            </mat-chip-listbox>
+        </ng-container>
+        <ng-container *ngSwitchCase="'chipsNoMultiple'">
+            <mat-label>{{question.label}}</mat-label>
+            <mat-chip-listbox [formControlName]="question.key" class="pb-4">
+                <mat-chip-option *ngFor="let opt of question.options" [value]="opt.key"
+                    color="primary">{{opt.value}}</mat-chip-option>
+            </mat-chip-listbox>
+        </ng-container>
+        <ng-container *ngSwitchCase="'textarea'">
+            <mat-form-field appearance="outline" class="w-100">
+                <textarea matInput [formControlName]="question.key" placeholder="Commentaire" class="textareaHeight"></textarea>
+            </mat-form-field>
+        </ng-container>
+        <ng-container *ngSwitchCase="'datepicker'">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>{{question.label}}</mat-label>
+                <input [formControlName]="question.key" [id]="question.key" matInput [matDatepicker]="picker">
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
         </ng-container>
     </div>
 
     <ng-template #questionBase let-question>
-        <mat-form-field class="w-75" appearance="outline">
+        <mat-form-field class="w-100" appearance="outline">
             <mat-label>{{question.label}}</mat-label>
-            <input matInput [formControlName]="question.key" [id]="question.key" [type]="question.type" [tabindex]="question.order">
+            <input matInput [formControlName]="question.key" [id]="question.key" [type]="question.type"
+                [tabindex]="question.order">
             <mat-error class="errorMessage" *ngIf="!isValid">{{getErrorMessage()}}</mat-error>
         </mat-form-field>
     </ng-template>
