@@ -17,7 +17,7 @@ export class BookInfosQuestionService {
     getBookQuestion(
         typesOfBook: TypesOfBooks[],
         status: Status[],
-        author: Author[]     
+        author: Author[]
     ) {
         const questions: QuestionBase<string>[] = [
 
@@ -50,8 +50,8 @@ export class BookInfosQuestionService {
                 }),
                 order: 3
             }),
-              
-            new TextareaQuestion ({
+
+            new TextareaQuestion({
                 key: 'comment',
                 label: 'Commentaire',
                 value: '',
@@ -76,10 +76,16 @@ export class BookInfosQuestionService {
                 type: 'datepicker',
                 order: 6
             }),
-              
+
             new DatepickerQuestion({
                 key: 'endDate',
                 label: 'Date de fin',
+                type: 'datepicker',
+                order: 7
+            }),
+            new TextboxQuestion({
+                key: 'isbn',
+                label: 'ISBN (utilisé pour la couverture)',
                 type: 'datepicker',
                 order: 7
             })
@@ -88,6 +94,6 @@ export class BookInfosQuestionService {
         return questions.sort((a, b) => a.order - b.order)
     }
 
-    
+
 
 }

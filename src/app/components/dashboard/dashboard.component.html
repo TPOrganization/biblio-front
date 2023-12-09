@@ -39,12 +39,16 @@
                     <hr class="w-50 mt-1 mb-2" />
                     <div class="w-100">
                         <div class="d-flex flex-wrap justify-content-center">
-                            <div *ngIf="!booksCurrentReading.length else currentReadingTemplate">
+                            <div *ngIf="!booksCurrentReading.length else booksCurrentReadingTemplate">
                                 <div class="m-5 d-flex flex-column align-items-center">
                                     Aucunes lectures en cours
                                     <img src="../../../assets/images/undraw_book_lover_re_rwjy.svg" height="200">
                                 </div>
                             </div>
+                            <ng-template #booksCurrentReadingTemplate>
+                                <ng-container
+                                    *ngTemplateOutlet="currentReadingTemplate;  context: {$implicit:booksCurrentReading}"></ng-container>
+                            </ng-template>
                         </div>
                     </div>
                 </div>
@@ -84,11 +88,8 @@
                                 </div>
                             </div>
                             <ng-template #bookshelfTemplate>
-                                <div *ngFor="let book of booksFiltered">
-                                    <div class="shapeOfCover m-4 p-0" (click)="bookInfos(book.id)">
-                                        {{book.title}}
-                                    </div>
-                                </div>
+                                <ng-container
+                                    *ngTemplateOutlet="currentReadingTemplate;  context: {$implicit:booksFiltered}"></ng-container>
                             </ng-template>
                         </div>
                     </div>
@@ -98,10 +99,11 @@
     </div>
 </div>
 
-<ng-template #currentReadingTemplate>
-    <div *ngFor="let book of booksCurrentReading">
-        <div class="shapeOfCover m-4 p-0" (click)="bookInfos(book.id)">
-            {{book.title}}
+<ng-template #currentReadingTemplate let-books>
+    <div *ngFor="let book of books">
+        <div class="shape-of-cover m-4 p-0" (click)="bookInfos(book.id)"
+            [style.background-image]="'url('+appService.getCoverUrl(book.isbn, 'M')+')'">
+            <span>{{book.title}}</span>
         </div>
     </div>
 </ng-template>

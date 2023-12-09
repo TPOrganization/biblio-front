@@ -37,7 +37,7 @@
     <div class="d-flex flex-row align-items-center">
         <ng-container [ngSwitch]="questionType">
             <ng-container *ngSwitchCase="'book-infos'">
-                <img class="img-book" src="../../../assets/images/HarryPotter.jpg" />
+                <img class="img-book" [src]="appService.getCoverUrl(bookSelectedInfos?.isbn, 'L')" />
             </ng-container>
             <ng-container *ngSwitchCase="'form-update'">
                 <div class="pt-3 w-100">

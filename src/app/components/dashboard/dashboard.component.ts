@@ -6,6 +6,7 @@ import { Book } from 'src/app/_models/_services/_api/_database/book/book.models'
 import { TypesOfBooks } from 'src/app/_models/_services/_api/_database/typesOfBooks/typesOfBooks.models'
 import { BookService } from 'src/app/_services/_api/_database/book/book.service'
 import { AuthService } from 'src/app/_services/_api/auth/auth.service'
+import { AppService } from 'src/app/_services/app.service'
 
 @Component({
     selector: 'app-dashboard',
@@ -24,6 +25,7 @@ export class DashboardComponent implements OnInit {
     private _booksOfUser: Book[] = []
 
     constructor(
+        public appService: AppService,
         public authService: AuthService,
         private readonly _router: Router,
         private readonly _bookService: BookService,

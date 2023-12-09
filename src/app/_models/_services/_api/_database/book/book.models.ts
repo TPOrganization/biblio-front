@@ -11,6 +11,7 @@ export interface ApiBook {
     comment: string
     startDate: Date | null
     endDate: Date | null
+    isbn: string
 }
 
 export interface BookFormData {
@@ -22,6 +23,7 @@ export interface BookFormData {
     comment: string
     startDate: Date | null
     endDate: Date | null
+    isbn: string
 }
 
 export class Book {
@@ -33,6 +35,7 @@ export class Book {
     comment: string
     startDate: Date | null
     endDate: Date | null
+    isbn: string
 
     constructor(data: ApiBook | null) {
         this.id = data ? data.id : 0
@@ -43,6 +46,7 @@ export class Book {
         this.comment = data ? data.comment : ''
         this.startDate = data && data.startDate ? new Date(data.startDate) : null
         this.endDate = data && data.endDate ? new Date(data.endDate) : null
+        this.isbn = data ? data.isbn : ''
     }
 
     getApiData(): ApiBook {
@@ -54,7 +58,8 @@ export class Book {
             typesOfBooks: this.typesOfBooks.map(e => e.getApiData()),
             comment: this.comment,
             startDate: this.startDate ? formatDateFromMoment(this.startDate) as any : null,
-            endDate: this.endDate ? formatDateFromMoment(this.endDate) as any : null
+            endDate: this.endDate ? formatDateFromMoment(this.endDate) as any : null,
+            isbn: this.isbn
         }
     }
 }

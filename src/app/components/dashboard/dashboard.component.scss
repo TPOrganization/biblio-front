@@ -3,6 +3,7 @@
 @import "../../../assets/css/variables/custom_variables";
 
 #dashboard {
+
     // ===================< background-container >=========================
     .img-background {
         background-image: url("/assets/images/background_img_opacity.jpg");
@@ -38,6 +39,7 @@
             opacity: 0 !important;
         }
     }
+
     // ================= < separator > ===========================
     hr {
         border-top: 1px solid black;
@@ -58,6 +60,7 @@
             overflow: scroll;
             padding-bottom: 5px;
         }
+
         .mdc-evolution-chip-set .mdc-evolution-chip-set__chips::-webkit-scrollbar {
             display: none;
         }
@@ -91,7 +94,7 @@
     }
 
     // =================== < shape de chaque cover > =========================
-    .shapeOfCover{
+    .shape-of-cover {
         width: 95px;
         height: 130px;
         background-color: #FFBD81;
@@ -100,6 +103,12 @@
         align-items: center;
         justify-content: center;
         overflow-wrap: anywhere;
-        text-align: center
+        text-align: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+
+        span {
+            background: #FFBD81;
+        }
     }
 }

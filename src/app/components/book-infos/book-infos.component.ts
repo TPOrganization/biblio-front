@@ -13,6 +13,7 @@ import { BookInfosQuestionService } from './book-infos-question.service'
 import { isMobileDevice } from 'src/app/_helpers/tools'
 import { SnackbarService } from 'src/app/_services/snackbar.service'
 import { TypesOfBooks } from 'src/app/_models/_services/_api/_database/typesOfBooks/typesOfBooks.models'
+import { AppService } from 'src/app/_services/app.service'
 
 @Component({
     selector: 'app-book-infos',
@@ -41,6 +42,7 @@ export class BookInfosComponent implements OnInit {
     private _authors: Author[] = []
 
     constructor(
+        public readonly appService: AppService,
         private readonly _bookService: BookService,
         private readonly _bookInfosQuestionService: BookInfosQuestionService,
         private readonly _router: Router,
