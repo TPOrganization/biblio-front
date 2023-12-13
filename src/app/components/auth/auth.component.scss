@@ -2,32 +2,22 @@
 @import "../../../assets/css/mixins/mixins";
 @import "../../../assets/css/variables/custom_variables";
 
-.margin {
-    margin: 0 50px;
-}
-
-::ng-deep .mdc-card {
-    border-radius: 30px !important;
-}
-
-.img-background {
-    background-image: url("/assets/images/backgroundImgMPB.jpg");
-    background-size: cover;
-    background-position: center;
-    width: 626px;
-    height: 872px;
-    margin: auto;
-}
-
 .btn-auth{
     border: none;
     background-color: #ffffff00 !important;
 }
 
-::ng-deep .mat-mdc-card-content {
-    width: 80%;
-}
-
 .cursor{
     cursor: pointer;
+}
+
+.background-image{
+    background-image: url("../../../assets/images/fond_auth_effetpola_mobile.png");
+    background-size: cover;
+}
+
+.background-form{
+    backdrop-filter: blur(10px);
+    background-color: #ffffff60;
+    border-radius: 10px;
 }

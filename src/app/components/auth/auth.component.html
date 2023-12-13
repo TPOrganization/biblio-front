@@ -1,53 +1,70 @@
-<div id="auth" class="container-fluid h-100 text-center">
-    <div class="row h-100 overflow-auto">
-        <div class="img-background custom-border-radius-mat-card offset-3 col-6 box-shadow">
-            <div class="row h-100">
-                <h1 class="pt-5 title-app color-main-dark_500"> MY POCKET <br> BOOKSHELF</h1>
-                <div class="d-flex align-items-center justify-content-center">
-                    <mat-card class="background-white w-75 align-items-center">
-                        <mat-card-content>
-                            <h2 class="color-main-dark_500 p-4"><b>{{title}}</b></h2>
-                            <app-dynamic-form [questions]="questions" (getFormGroup)="getFormGroup($event)"
-                                (submitEvent)="submit($event)"></app-dynamic-form>
-                            <ng-container [ngSwitch]="questionType">
-                                <ng-container *ngSwitchCase="'signIn'">
-                                    <button class="btn-auth w-100 pb-3" (click)="switchQuestions('forgotPassword')"> Mot
-                                        de passe oublié ? </button>
-                                    <button mat-raised-button color="accent" (click)="submit(this.form.value)"
-                                        [disabled]="!form.valid"> Se connecter </button>
-                                </ng-container>
-                                <ng-container *ngSwitchCase="'forgotPassword'">
-                                    <div class="row flex justify-content-evenly">
-                                        <button mat-button class="w-25 btnValid" mat-raised-button color="accent"
-                                            (click)="submit(this.form.value)" [disabled]="!form.valid"> Valider
-                                        </button>
-                                        <button mat-button class="w-25 btnBackTo" mat-raised-button color="accent"
-                                            (click)="switchQuestions('signIn')"> Retour </button>
-                                    </div>
-                                </ng-container>
-                                <ng-container *ngSwitchCase="'signUp'">
-                                    <button mat-raised-button color="accent" (click)="submit(this.form.value)"
-                                        [disabled]="!form.valid"> S'inscrire </button>
-                                </ng-container>
-                            </ng-container>
-                        </mat-card-content>
-                    </mat-card>
+<!-- AUTH DESKTOP -->
+<div id="auth-desktop" class="d-none d-xl-block flex-1 h-100">
+    <div class="container-fluid h-100 overflow-auto d-flex align-items-center justify-content-center ">
+        <div class="col-12 d-flex align-items-center justify-content-center">
+            <div class="row col-8 background-white box-shadow">
+                <div class="col-6 d-flex justify-content-center">
+                    <img src="../../../assets/images/fond_auth_effetpola.png" class="w-100" alt="">
                 </div>
-                <div class="row">
-                    <span class="color-main-dark_500">
-                        <ng-container [ngSwitch]="questionType">
-                            <ng-container *ngSwitchCase="'signIn'">
-                                Vous n'avez pas de compte ? <button class="btn-auth"
-                                    (click)="switchQuestions('signUp')"><b> S'inscrire </b> </button>
-                            </ng-container>
-                            <ng-container *ngSwitchCase="'signUp'">
-                                Vous avez un compte ? <button class="btn-auth" (click)="switchQuestions('signIn')">
-                                    <b>Se connecter</b> </button>
-                            </ng-container>
-                        </ng-container>
-                    </span>
+                <div class="col-6 d-flex flex-column align-items-center justify-content-evenly">
+                    <ng-container *ngTemplateOutlet="formAuth"></ng-container>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<!-- AUTH MOBILE -->
+<div id="auth-mobile" class="d-block d-xl-none flex-1 h-100  background-image p-0">
+    <div class="container-fluid h-100 overflow-auto">
+        <div class="text-center h-100 d-flex align-items-center">
+            <div class="background-form h-75 w-100 p-5 d-flex flex-column align-items-center justify-content-evenly">
+                <ng-container *ngTemplateOutlet="formAuth">
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<ng-template #formAuth>
+    <h1 class="title-app color-main-dark_500"> MY POCKET <br> BOOKSHELF</h1>
+    <div class="d-flex flex-column align-items-center w-100">
+        <h2 class="color-main-dark_500 p-4"><b>{{title}}</b></h2>
+        <app-dynamic-form class="w-100" [questions]="questions" (getFormGroup)="getFormGroup($event)"
+            (submitEvent)="submit($event)"></app-dynamic-form>
+        <ng-container [ngSwitch]="questionType">
+            <ng-container *ngSwitchCase="'signIn'">
+                <button class="btn-auth pb-3" (click)="switchQuestions('forgotPassword')"> Mot
+                    de passe oublié ? </button>
+                <button mat-raised-button color="accent" class="w-50 mt-3" (click)="submit(this.form.value)" [disabled]="!form.valid">
+                    Se connecter </button>
+            </ng-container>
+            <ng-container *ngSwitchCase="'forgotPassword'">
+                <div class="row flex justify-content-evenly">
+                    <button mat-button class="w-25 btnValid" mat-raised-button color="accent"
+                        (click)="submit(this.form.value)" [disabled]="!form.valid"> Valider
+                    </button>
+                    <button mat-button class="w-25 btnBackTo" mat-raised-button color="accent"
+                        (click)="switchQuestions('signIn')"> Retour </button>
+                </div>
+            </ng-container>
+            <ng-container *ngSwitchCase="'signUp'">
+                <button mat-raised-button color="accent" (click)="submit(this.form.value)" [disabled]="!form.valid">
+                    S'inscrire </button>
+            </ng-container>
+        </ng-container>
+    </div>
+    <span class="py-5 color-main-dark_500">
+        <ng-container [ngSwitch]="questionType">
+            <ng-container *ngSwitchCase="'signIn'">
+                Vous n'avez pas de compte ? <button class="btn-auth" (click)="switchQuestions('signUp')"><b>
+                        S'inscrire </b> </button>
+            </ng-container>
+            <ng-container *ngSwitchCase="'signUp'">
+                Vous avez un compte ? <button class="btn-auth" (click)="switchQuestions('signIn')">
+                    <b>Se connecter</b> </button>
+            </ng-container>
+        </ng-container>
+    </span>
+</ng-template>
